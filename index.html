@@ -1,1103 +1,1436 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Labubu Web</title>
-
-    <style>
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        html, body {
-            min-height: 100%;
-        }
-
-        body {
-            min-height: 100vh;
-            overflow-x: hidden;
-            color: white;
-
-            background:
-                radial-gradient(
-                    circle at 20% 20%,
-                    rgba(255, 0, 0, 0.7),
-                    transparent 28%
-                ),
-                radial-gradient(
-                    circle at 80% 80%,
-                    rgba(150, 0, 0, 0.8),
-                    transparent 32%
-                ),
-                radial-gradient(
-                    circle at 50% 50%,
-                    rgba(255, 20, 20, 0.2),
-                    transparent 45%
-                ),
-                linear-gradient(
-                    135deg,
-                    #030000,
-                    #160000,
-                    #650000,
-                    #160000,
-                    #030000
-                );
-
-            background-size: 250% 250%;
-            animation: backgroundMove 12s ease infinite;
-        }
-
-        @keyframes backgroundMove {
-
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-
-        }
-
-        /* GROS GLOW CENTRAL */
-
-        body::before {
-            content: "";
-
-            position: fixed;
-
-            width: 800px;
-            height: 800px;
-
-            left: 50%;
-            top: 50%;
-
-            transform: translate(-50%, -50%);
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(255, 0, 0, 0.25),
-                    transparent 65%
-                );
-
-            filter: blur(40px);
-
-            animation: centralGlow 5s ease-in-out infinite alternate;
-
-            pointer-events: none;
-
-            z-index: 0;
-        }
-
-        @keyframes centralGlow {
-
-            from {
-                transform: translate(-50%, -50%) scale(0.8);
-                opacity: 0.5;
-            }
-
-            to {
-                transform: translate(-50%, -50%) scale(1.3);
-                opacity: 1;
-            }
-
-        }
-
-        /* PARTICULES */
-
-        .particle {
-
-            position: fixed;
-
-            width: 4px;
-            height: 4px;
-
-            border-radius: 50%;
-
-            background: white;
-
-            box-shadow:
-                0 0 8px white,
-                0 0 18px red,
-                0 0 30px red;
-
-            animation: particleMove linear infinite;
-
-            pointer-events: none;
-
-            z-index: 1;
-        }
-
-        @keyframes particleMove {
-
-            0% {
-                transform: translateY(110vh) scale(0);
-                opacity: 0;
-            }
-
-            15% {
-                opacity: 1;
-            }
-
-            80% {
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(-10vh) scale(1.5);
-                opacity: 0;
-            }
-
-        }
-
-        /* CONTAINER */
-
-        .container {
-
-            position: relative;
-            z-index: 5;
-
-            min-height: 100vh;
-
-            display: flex;
-
-            justify-content: center;
-            align-items: center;
-
-            padding: 25px;
-        }
-
-        /* MENU */
-
-        .box {
-
-            width: 100%;
-            max-width: 650px;
-
-            padding: 50px 30px;
-
-            text-align: center;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,0.09),
-                    rgba(0,0,0,0.55)
-                );
-
-            border: 1px solid rgba(255,255,255,0.18);
-
-            border-radius: 30px;
-
-            backdrop-filter: blur(25px);
-
-            box-shadow:
-                0 0 25px rgba(255,0,0,0.4),
-                0 0 70px rgba(255,0,0,0.2),
-                inset 0 0 30px rgba(255,255,255,0.03);
-
-        }
-
-        /* TITRE */
-
-        h1 {
-
-            font-size: 52px;
-
-            margin-bottom: 10px;
-
-            letter-spacing: 3px;
-
-            text-shadow:
-                0 0 10px red,
-                0 0 25px red,
-                0 0 50px red;
-
-            animation: titleGlow 2s ease-in-out infinite alternate;
-
-        }
-
-        @keyframes titleGlow {
-
-            from {
-
-                text-shadow:
-                    0 0 10px red,
-                    0 0 25px red;
-
-            }
-
-            to {
-
-                text-shadow:
-                    0 0 15px red,
-                    0 0 40px red,
-                    0 0 80px red;
-
-            }
-
-        }
-
-        .subtitle {
-
-            color: #ffbaba;
-
-            margin-bottom: 35px;
-
-            font-size: 16px;
-
-        }
-
-        /* PAGES */
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
-
-            display: block;
-
-            animation: pageIn 0.4s ease;
-
-        }
-
-        @keyframes pageIn {
-
-            from {
-
-                opacity: 0;
-                transform: translateY(20px) scale(0.97);
-
-            }
-
-            to {
-
-                opacity: 1;
-                transform: translateY(0) scale(1);
-
-            }
-
-        }
-
-        /* BOUTONS */
-
-        .buttons {
-
-            display: flex;
-
-            flex-direction: column;
-
-            align-items: center;
-
-            gap: 16px;
-
-        }
-
-        button,
-        .link-button {
-
-            width: 85%;
-            max-width: 430px;
-
-            padding: 17px 20px;
-
-            border-radius: 15px;
-
-            border: 1px solid rgba(255,255,255,0.15);
-
-            background:
-                linear-gradient(
-                    90deg,
-                    rgba(255,0,0,0.15),
-                    rgba(255,255,255,0.07)
-                );
-
-            color: white;
-
-            font-size: 18px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
-            text-decoration: none;
-
-            transition: all 0.25s ease;
-
-            box-shadow:
-                0 5px 20px rgba(0,0,0,0.3);
-
-        }
-
-        button:hover,
-        .link-button:hover {
-
-            transform: translateY(-4px) scale(1.04);
-
-            background:
-                linear-gradient(
-                    90deg,
-                    rgba(255,0,0,0.8),
-                    rgba(130,0,0,0.9)
-                );
-
-            box-shadow:
-                0 0 15px red,
-                0 0 35px rgba(255,0,0,0.7),
-                0 0 60px rgba(255,0,0,0.3);
-
-        }
-
-        button:active,
-        .link-button:active {
-
-            transform: scale(0.97);
-
-        }
-
-        /* RETOUR */
-
-        .back {
-
-            margin-top: 25px;
-
-            background: rgba(0,0,0,0.45);
-
-            font-size: 15px;
-
-        }
-
-        /* CREDITS */
-
-        .credits {
-
-            line-height: 2;
-
-            font-size: 20px;
-
-        }
-
-        .credits span {
-
-            color: #ff7777;
-
-            font-weight: bold;
-
-            text-shadow:
-                0 0 10px red,
-                0 0 20px red;
-
-        }
-
-        /* COMPTEUR */
-
-        .visitorBox {
-
-            margin: 25px auto 30px auto;
-
-            width: 85%;
-            max-width: 430px;
-
-            padding: 18px;
-
-            border-radius: 18px;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    rgba(255,0,0,0.18),
-                    rgba(0,0,0,0.45)
-                );
-
-            border: 1px solid rgba(255,255,255,0.15);
-
-            box-shadow:
-                0 0 20px rgba(255,0,0,0.25);
-
-        }
-
-        .visitorTitle {
-
-            font-size: 14px;
-
-            color: #ffbaba;
-
-            margin-bottom: 5px;
-
-        }
-
-        .visitorNumber {
-
-            font-size: 32px;
-
-            font-weight: bold;
-
-            color: white;
-
-            text-shadow:
-                0 0 10px red,
-                0 0 25px red;
-
-        }
-
-        /* GAME CARDS */
-
-        .gameDescription {
-
-            color: #ffbaba;
-
-            margin-bottom: 20px;
-
-            font-size: 15px;
-
-        }
-
-        .gameCard {
-
-            width: 85%;
-            max-width: 430px;
-
-            padding: 20px;
-
-            border-radius: 18px;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,0,0,0.15),
-                    rgba(0,0,0,0.45)
-                );
-
-            border: 1px solid rgba(255,255,255,0.12);
-
-            box-shadow:
-                0 0 20px rgba(255,0,0,0.15);
-
-        }
-
-        .gameCard h2 {
-
-            margin-bottom: 8px;
-
-            font-size: 25px;
-
-            text-shadow:
-                0 0 10px red;
-
-        }
-
-        .gameCard p {
-
-            color: #ffbaba;
-
-            margin-bottom: 15px;
-
-            font-size: 14px;
-
-        }
-
-        .installButtons {
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 10px;
-
-        }
-
-        .installButtons a {
-
-            width: 100%;
-
-        }
-
-        /* BOUTON MUSIQUE */
-
-        .musicButton {
-
-            position: fixed;
-
-            left: 20px;
-            bottom: 20px;
-
-            width: auto;
-
-            max-width: none;
-
-            padding: 12px 18px;
-
-            font-size: 14px;
-
-            z-index: 100;
-
-            background:
-                rgba(0,0,0,0.65);
-
-        }
-
-        /* MOBILE */
-
-        @media(max-width:600px) {
-
-            h1 {
-                font-size: 36px;
-            }
-
-            .box {
-                padding: 40px 15px;
-            }
-
-            button,
-            .link-button {
-                width: 95%;
-            }
-
-            .gameCard,
-            .visitorBox {
-                width: 95%;
-            }
-
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#05050a">
+
+<title>LABUBU WEB // X900000</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+:root{
+    --red:#ff1744;
+    --red2:#ff003c;
+    --pink:#ff4d8d;
+    --dark:#030308;
+    --glass:rgba(10,10,20,.68);
+    --line:rgba(255,255,255,.12);
+    --text:#fff;
+    --muted:#a9a9bd;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+    overflow-x:hidden;
+    color:var(--text);
+    background:
+        radial-gradient(circle at 20% 10%,rgba(255,0,60,.25),transparent 30%),
+        radial-gradient(circle at 80% 80%,rgba(120,0,255,.18),transparent 30%),
+        linear-gradient(135deg,#020206,#09030a,#030308);
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+body:before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:-5;
+    background:
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:55px 55px;
+    mask-image:linear-gradient(to bottom,transparent,#000 15%,#000 85%,transparent);
+    animation:gridMove 12s linear infinite;
+}
+
+@keyframes gridMove{
+    from{background-position:0 0,0 0}
+    to{background-position:55px 55px,55px 55px}
+}
+
+body:after{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:999;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 3px,
+            rgba(255,255,255,.012) 4px
+        );
+}
+
+/* =========================
+   CURSOR GLOW
+========================= */
+
+.cursorGlow{
+    position:fixed;
+    width:250px;
+    height:250px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:2;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(circle,rgba(255,0,65,.16),transparent 70%);
+    filter:blur(8px);
+}
+
+/* =========================
+   PARTICLES
+========================= */
+
+.particle{
+    position:fixed;
+    width:3px;
+    height:3px;
+    border-radius:50%;
+    background:#fff;
+    box-shadow:0 0 8px #fff,0 0 18px var(--red);
+    pointer-events:none;
+    z-index:-1;
+    animation:float linear infinite;
+}
+
+@keyframes float{
+    0%{
+        transform:translateY(110vh) scale(.2);
+        opacity:0;
+    }
+    15%{opacity:1}
+    80%{opacity:1}
+    100%{
+        transform:translateY(-10vh) scale(1.5);
+        opacity:0;
+    }
+}
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 35px;
+    background:rgba(3,3,8,.72);
+    backdrop-filter:blur(25px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+    z-index:100;
+}
+
+.logo{
+    font-size:19px;
+    font-weight:900;
+    letter-spacing:3px;
+    text-shadow:0 0 12px var(--red);
+}
+
+.logo span{
+    color:var(--red);
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    color:#aaa;
+    font-size:12px;
+    letter-spacing:1px;
+}
+
+.statusDot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    background:#00ff88;
+    box-shadow:0 0 12px #00ff88;
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    50%{
+        opacity:.35;
+        transform:scale(.7);
+    }
+}
+
+.clock{
+    font-family:monospace;
+    color:#fff;
+    font-size:13px;
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.container{
+    position:relative;
+    z-index:5;
+    min-height:100vh;
+    padding:115px 20px 70px;
+    display:flex;
+    justify-content:center;
+}
+
+.shell{
+    width:100%;
+    max-width:1100px;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    position:relative;
+    padding:65px 35px;
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:30px;
+    background:
+        linear-gradient(135deg,rgba(255,255,255,.07),rgba(0,0,0,.5));
+    backdrop-filter:blur(30px);
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.5),
+        0 0 80px rgba(255,0,60,.1);
+}
+
+.hero:before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    right:-250px;
+    top:-250px;
+    background:radial-gradient(circle,rgba(255,0,65,.25),transparent 65%);
+    animation:orb 5s ease-in-out infinite alternate;
+}
+
+@keyframes orb{
+    from{transform:scale(.8)}
+    to{transform:scale(1.25)}
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 13px;
+    border-radius:999px;
+    background:rgba(255,0,60,.08);
+    border:1px solid rgba(255,0,60,.3);
+    color:#ff8da7;
+    font-size:11px;
+    letter-spacing:2px;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    position:relative;
+    font-size:clamp(48px,9vw,100px);
+    line-height:.9;
+    letter-spacing:-5px;
+    font-weight:1000;
+    text-shadow:
+        0 0 10px rgba(255,0,60,.8),
+        0 0 40px rgba(255,0,60,.45),
+        0 0 100px rgba(255,0,60,.2);
+}
+
+.hero h1 span{
+    color:var(--red);
+}
+
+.hero p{
+    margin-top:25px;
+    max-width:650px;
+    color:var(--muted);
+    line-height:1.7;
+    font-size:16px;
+}
+
+.heroActions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:30px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn{
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(255,255,255,.045);
+    color:#fff;
+    border-radius:14px;
+    padding:14px 22px;
+    text-decoration:none;
+    cursor:pointer;
+    font-weight:800;
+    font-size:14px;
+    transition:.25s;
+    position:relative;
+    overflow:hidden;
+}
+
+.btn:before{
+    content:"";
+    position:absolute;
+    left:-100%;
+    top:0;
+    width:100%;
+    height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+    transition:.5s;
+}
+
+.btn:hover:before{
+    left:100%;
+}
+
+.btn:hover{
+    transform:translateY(-4px);
+    border-color:rgba(255,0,60,.5);
+    box-shadow:0 0 30px rgba(255,0,60,.18);
+}
+
+.btn.primary{
+    background:linear-gradient(135deg,#ff1744,#a90030);
+    border-color:#ff4567;
+    box-shadow:0 0 25px rgba(255,0,60,.3);
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-top:20px;
+}
+
+.stat{
+    padding:20px;
+    border-radius:20px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.035);
+    backdrop-filter:blur(20px);
+}
+
+.stat small{
+    display:block;
+    color:#777789;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    font-size:9px;
+    margin-bottom:8px;
+}
+
+.stat strong{
+    font-size:22px;
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.nav{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:25px 0;
+}
+
+.nav button{
+    flex:1;
+    min-width:120px;
+    padding:14px;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.035);
+    color:#aaa;
+    border-radius:13px;
+    cursor:pointer;
+    font-weight:800;
+    transition:.25s;
+}
+
+.nav button:hover,
+.nav button.active{
+    color:#fff;
+    border-color:rgba(255,0,60,.5);
+    background:rgba(255,0,60,.1);
+    box-shadow:0 0 25px rgba(255,0,60,.1);
+}
+
+/* =========================
+   PAGES
+========================= */
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+    animation:pageIn .45s ease;
+}
+
+@keyframes pageIn{
+    from{
+        opacity:0;
+        transform:translateY(18px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.sectionTitle{
+    margin-bottom:20px;
+}
+
+.sectionTitle h2{
+    font-size:35px;
+    letter-spacing:-1px;
+}
+
+.sectionTitle p{
+    color:#777789;
+    margin-top:7px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.card{
+    position:relative;
+    padding:25px;
+    min-height:210px;
+    border:1px solid var(--line);
+    border-radius:22px;
+    background:
+        linear-gradient(145deg,rgba(255,255,255,.065),rgba(0,0,0,.35));
+    overflow:hidden;
+    transition:.3s;
+}
+
+.card:after{
+    content:"";
+    position:absolute;
+    width:120px;
+    height:120px;
+    right:-60px;
+    bottom:-60px;
+    border-radius:50%;
+    background:rgba(255,0,60,.12);
+    filter:blur(15px);
+}
+
+.card:hover{
+    transform:translateY(-7px);
+    border-color:rgba(255,0,60,.45);
+    box-shadow:0 15px 45px rgba(0,0,0,.35),0 0 35px rgba(255,0,60,.1);
+}
+
+.cardIcon{
+    font-size:35px;
+    margin-bottom:18px;
+}
+
+.card h3{
+    font-size:21px;
+    margin-bottom:9px;
+}
+
+.card p{
+    color:#858597;
+    line-height:1.5;
+    font-size:13px;
+}
+
+/* =========================
+   GAME CARDS
+========================= */
+
+.game{
+    min-height:290px;
+}
+
+.gameTag{
+    display:inline-block;
+    padding:5px 8px;
+    border-radius:7px;
+    background:rgba(255,0,60,.1);
+    color:#ff7894;
+    font-size:9px;
+    letter-spacing:1px;
+    margin-bottom:15px;
+}
+
+.game h3{
+    font-size:25px;
+}
+
+.game .desc{
+    min-height:45px;
+    margin:10px 0 18px;
+}
+
+.gameBtns{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.gameBtns a{
+    text-align:center;
+    padding:12px;
+}
+
+/* =========================
+   VISITS
+========================= */
+
+.visitPanel{
+    margin-top:20px;
+    padding:30px;
+    border-radius:22px;
+    border:1px solid rgba(255,0,60,.2);
+    background:
+        radial-gradient(circle at 80% 20%,rgba(255,0,60,.13),transparent 35%),
+        rgba(255,255,255,.03);
+}
+
+.visitNumber{
+    font-size:55px;
+    font-weight:1000;
+    color:#fff;
+    text-shadow:0 0 25px var(--red);
+}
+
+.visitPanel p{
+    color:#777789;
+    margin-top:4px;
+}
+
+/* =========================
+   CREDITS
+========================= */
+
+.credits{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.credit{
+    padding:18px;
+    text-align:center;
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.035);
+    border-radius:15px;
+    color:#ddd;
+    font-weight:800;
+    transition:.25s;
+}
+
+.credit:hover{
+    transform:scale(1.04);
+    color:#fff;
+    border-color:rgba(255,0,60,.4);
+    box-shadow:0 0 25px rgba(255,0,60,.1);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    text-align:center;
+    color:#555565;
+    font-size:11px;
+    letter-spacing:1px;
+    padding:30px 0 10px;
+}
+
+/* =========================
+   MUSIC
+========================= */
+
+.musicButton{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:200;
+    padding:13px 17px;
+    border-radius:14px;
+    border:1px solid rgba(255,0,60,.35);
+    background:rgba(5,5,10,.8);
+    backdrop-filter:blur(20px);
+    color:#fff;
+    cursor:pointer;
+    font-weight:800;
+    box-shadow:0 0 25px rgba(255,0,60,.12);
+}
+
+.musicButton:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 30px rgba(255,0,60,.25);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:800px){
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .status{
+        display:none;
+    }
+
+    .hero{
+        padding:45px 23px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .credits{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:500px){
+
+    .container{
+        padding:95px 10px 50px;
+    }
+
+    .hero h1{
+        letter-spacing:-3px;
+    }
+
+    .heroActions{
+        flex-direction:column;
+    }
+
+    .heroActions .btn{
+        text-align:center;
+        width:100%;
+    }
+
+    .nav{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+    }
+
+    .nav button{
+        min-width:0;
+    }
+
+    .stats{
+        gap:8px;
+    }
+
+    .stat{
+        padding:15px;
+    }
+
+    .stat strong{
+        font-size:17px;
+    }
+
+}
+</style>
 </head>
 
 <body>
 
-    <!-- PARTICULES -->
+<!-- CURSEUR -->
 
-    <div class="particle" style="left:5%; animation-duration:8s;"></div>
-    <div class="particle" style="left:12%; animation-duration:11s;"></div>
-    <div class="particle" style="left:20%; animation-duration:9s;"></div>
-    <div class="particle" style="left:28%; animation-duration:13s;"></div>
-    <div class="particle" style="left:36%; animation-duration:10s;"></div>
-    <div class="particle" style="left:44%; animation-duration:14s;"></div>
-    <div class="particle" style="left:52%; animation-duration:9s;"></div>
-    <div class="particle" style="left:60%; animation-duration:12s;"></div>
-    <div class="particle" style="left:68%; animation-duration:10s;"></div>
-    <div class="particle" style="left:76%; animation-duration:15s;"></div>
-    <div class="particle" style="left:84%; animation-duration:11s;"></div>
-    <div class="particle" style="left:92%; animation-duration:13s;"></div>
+<div class="cursorGlow" id="cursorGlow"></div>
 
+<!-- PARTICULES -->
 
-    <!-- MENU -->
+<div class="particle" style="left:4%;animation-duration:9s"></div>
+<div class="particle" style="left:9%;animation-duration:12s"></div>
+<div class="particle" style="left:15%;animation-duration:7s"></div>
+<div class="particle" style="left:22%;animation-duration:14s"></div>
+<div class="particle" style="left:29%;animation-duration:10s"></div>
+<div class="particle" style="left:36%;animation-duration:13s"></div>
+<div class="particle" style="left:43%;animation-duration:8s"></div>
+<div class="particle" style="left:50%;animation-duration:15s"></div>
+<div class="particle" style="left:57%;animation-duration:11s"></div>
+<div class="particle" style="left:64%;animation-duration:9s"></div>
+<div class="particle" style="left:71%;animation-duration:14s"></div>
+<div class="particle" style="left:78%;animation-duration:10s"></div>
+<div class="particle" style="left:85%;animation-duration:12s"></div>
+<div class="particle" style="left:92%;animation-duration:8s"></div>
+<div class="particle" style="left:97%;animation-duration:13s"></div>
 
-    <div class="container">
+<!-- TOPBAR -->
 
-        <div class="box">
+<header class="topbar">
 
+    <div class="logo">
+        LABUBU<span>//</span>WEB
+    </div>
 
-            <!-- HOME -->
+    <div class="status">
+        <div class="statusDot"></div>
+        SYSTEM ONLINE
+    </div>
 
-            <div id="home" class="page active">
+    <div class="clock" id="clock">
+        00:00:00
+    </div>
 
-                <h1>LABUBU WEB</h1>
+</header>
 
-                <p class="subtitle">
-                    Welcome to my website 🔥
-                </p>
+<!-- MAIN -->
 
-                <!-- COMPTEUR -->
+<main class="container">
 
-                <div class="visitorBox">
+<div class="shell">
 
-                    <div class="visitorTitle">
-                        👀 Visites sur ce navigateur
-                    </div>
+<!-- HERO -->
 
-                    <div
-                        id="visitorCount"
-                        class="visitorNumber">
+<section class="hero">
 
-                        0
+    <div class="badge">
+        ⚡ SYSTEM X900000
+    </div>
 
-                    </div>
+    <h1>
+        LABUBU<br>
+        <span>WEB</span>
+    </h1>
 
-                </div>
+    <p>
+        Welcome to the next generation of Labubu Web.
+        Games, mods, links and more — réunis dans une
+        interface futuriste conçue pour PC, mobile et Quest.
+    </p>
 
+    <div class="heroActions">
 
-                <div class="buttons">
+        <button class="btn primary" onclick="showPage('games')">
+            🎮 EXPLORE GAMES
+        </button>
 
-                    <button onclick="showPage('games')">
-                        🎮 Games
-                    </button>
+        <button class="btn" onclick="showPage('mods')">
+            🛠️ OPEN MODS
+        </button>
 
-                    <button onclick="showPage('other')">
-                        🌐 Other Web
-                    </button>
+    </div>
 
-                    <button onclick="showPage('mods')">
-                        🛠️ Mods
-                    </button>
+</section>
 
-                    <button onclick="showPage('credit')">
-                        👑 Credit
-                    </button>
+<!-- STATS -->
 
-                </div>
+<section class="stats">
 
-            </div>
+    <div class="stat">
+        <small>STATUS</small>
+        <strong style="color:#00ff88">ONLINE</strong>
+    </div>
 
+    <div class="stat">
+        <small>VISITS</small>
+        <strong id="statVisits">0</strong>
+    </div>
 
-            <!-- GAMES -->
+    <div class="stat">
+        <small>GAMES</small>
+        <strong>03</strong>
+    </div>
 
-            <div id="games" class="page">
+    <div class="stat">
+        <small>VERSION</small>
+        <strong>X900000</strong>
+    </div>
 
-                <h1>Games</h1>
+</section>
 
-                <p class="subtitle">
-                    Install your favorite games
-                </p>
+<!-- NAV -->
 
+<nav class="nav">
 
-                <div class="buttons">
+    <button class="active" onclick="showPage('home',this)">
+        🏠 HOME
+    </button>
 
+    <button onclick="showPage('games',this)">
+        🎮 GAMES
+    </button>
 
-                    <!-- ANIMAL COMPANY -->
+    <button onclick="showPage('mods',this)">
+        🛠️ MODS
+    </button>
 
-                    <div class="gameCard">
+    <button onclick="showPage('other',this)">
+        🌐 OTHER
+    </button>
 
-                        <h2>🐾 Animal Company</h2>
+    <button onclick="showPage('credit',this)">
+        👑 CREDITS
+    </button>
 
-                        <p>
-                            VR multiplayer adventure
-                        </p>
+</nav>
 
-                        <div class="installButtons">
+<!-- =========================
+     HOME
+========================= -->
 
-                            <a
-                                class="link-button"
-                                href="https://store.steampowered.com/app/4551040/Animal_Company/"
-                                target="_blank"
-                                rel="noopener">
+<section id="home" class="page active">
 
-                                💻 Installer sur PC
+    <div class="sectionTitle">
 
-                            </a>
+        <h2>Dashboard</h2>
 
-                            <a
-                                class="link-button"
-                                href="https://www.animalcompanyvr.com/"
-                                target="_blank"
-                                rel="noopener">
+        <p>
+            Welcome back to Labubu Web.
+        </p>
 
-                                🥽 Installer sur Quest
+    </div>
 
-                            </a>
+    <div class="visitPanel">
 
-                        </div>
+        <div class="badge">
+            👀 VISITOR SYSTEM
+        </div>
 
-                    </div>
+        <div
+            class="visitNumber"
+            id="visitorCount">
+            0
+        </div>
 
+        <p>
+            visites enregistrées sur ce navigateur
+        </p>
 
-                    <!-- GORILLA TAG -->
+    </div>
 
-                    <div class="gameCard">
+    <div class="grid" style="margin-top:20px">
 
-                        <h2>🦍 Gorilla Tag</h2>
+        <div class="card">
 
-                        <p>
-                            Become monke 🦍
-                        </p>
+            <div class="cardIcon">⚡</div>
 
-                        <div class="installButtons">
+            <h3>Fast Interface</h3>
 
-                            <a
-                                class="link-button"
-                                href="https://store.steampowered.com/app/1533390/Gorilla_Tag/"
-                                target="_blank"
-                                rel="noopener">
+            <p>
+                Une interface légère et optimisée
+                pour une navigation rapide.
+            </p>
 
-                                💻 Installer sur PC
+        </div>
 
-                            </a>
+        <div class="card">
 
-                            <a
-                                class="link-button"
-                                href="https://www.meta.com/experiences/gorilla-tag/4979055762136823/"
-                                target="_blank"
-                                rel="noopener">
+            <div class="cardIcon">🥽</div>
 
-                                🥽 Installer sur Quest
+            <h3>Quest Ready</h3>
 
-                            </a>
+            <p>
+                Design adapté aux écrans et navigateurs
+                du Meta Quest.
+            </p>
 
-                        </div>
+        </div>
 
-                    </div>
+        <div class="card">
 
+            <div class="cardIcon">🔴</div>
 
-                    <!-- ROBLOX -->
+            <h3>Cyber System</h3>
 
-                    <div class="gameCard">
-
-                        <h2>🎮 Roblox</h2>
-
-                        <p>
-                            Play Roblox in flat screen or VR
-                        </p>
-
-                        <div class="installButtons">
-
-                            <a
-                                class="link-button"
-                                href="https://www.roblox.com/download"
-                                target="_blank"
-                                rel="noopener">
-
-                                💻 Installer sur PC
-
-                            </a>
-
-                            <a
-                                class="link-button"
-                                href="https://www.meta.com/experiences/roblox/5804350713746839/"
-                                target="_blank"
-                                rel="noopener">
-
-                                🥽 Installer sur Quest
-
-                            </a>
-
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-
-                <button
-                    class="back"
-                    onclick="showPage('home')">
-
-                    ← Retour
-
-                </button>
-
-            </div>
-
-
-            <!-- OTHER WEB -->
-
-            <div id="other" class="page">
-
-                <h1>Other Web</h1>
-
-                <p class="subtitle">
-                    Other websites
-                </p>
-
-                <div class="buttons">
-
-
-                    <a
-                        class="link-button"
-                        href="https://guns.lol/labubuclan"
-                        target="_blank"
-                        rel="noopener">
-
-                        🌐 Web2
-
-                    </a>
-
-
-                    <a
-                        class="link-button"
-                        href="https://discord.gg/2gBvyZJxt"
-                        target="_blank"
-                        rel="noopener">
-
-                        💬 Discord
-
-                    </a>
-
-
-                </div>
-
-
-                <button
-                    class="back"
-                    onclick="showPage('home')">
-
-                    ← Retour
-
-                </button>
-
-            </div>
-
-
-            <!-- MODS -->
-
-            <div id="mods" class="page">
-
-                <h1>Mods</h1>
-
-                <p class="subtitle">
-                    Downloads
-                </p>
-
-
-                <div class="buttons">
-
-
-                    <a
-                        class="link-button"
-                        href="https://gofile.io/d/q4it99"
-                        target="_blank"
-                        rel="noopener">
-
-                        📦 Mod #1
-
-                    </a>
-
-
-                    <a
-                        class="link-button"
-                        href="https://gofile.io/d/a60db590-617b-40ca-8086-6ce106ded48b"
-                        target="_blank"
-                        rel="noopener">
-
-                        📦 Mod #2
-
-                    </a>
-
-
-                    <a
-                        class="link-button"
-                        href="https://gofile.io/d/r9pjUQIT"
-                        target="_blank"
-                        rel="noopener">
-
-                        📦 Mod #3
-
-                    </a>
-
-
-                </div>
-
-
-                <button
-                    class="back"
-                    onclick="showPage('home')">
-
-                    ← Retour
-
-                </button>
-
-            </div>
-
-
-            <!-- CREDITS -->
-
-            <div id="credit" class="page">
-
-                <h1>Credit</h1>
-
-                <p class="subtitle">
-                    Special Thanks ❤️
-                </p>
-
-
-                <div class="credits">
-
-                    <p><span>LabubuP</span></p>
-                    <p><span>LabubuOwner</span></p>
-                    <p><span>TTNVR</span></p>
-                    <p><span>TTN</span></p>
-                    <p><span>LBB</span></p>
-                    <p><span>LBBP</span></p>
-                    <p><span>LBBO</span></p>
-
-                </div>
-
-
-                <button
-                    class="back"
-                    onclick="showPage('home')">
-
-                    ← Retour
-
-                </button>
-
-            </div>
-
+            <p>
+                Glow, glassmorphism, animations et
+                interface futuriste.
+            </p>
 
         </div>
 
     </div>
 
+</section>
 
-    <!-- LECTEUR AUDIO -->
+<!-- =========================
+     GAMES
+========================= -->
 
-    <audio
-        id="music"
-        loop
-        preload="auto">
+<section id="games" class="page">
 
-        <source
-            src="music.mp3"
-            type="audio/mpeg">
+    <div class="sectionTitle">
 
-        Ton navigateur ne supporte pas l'audio HTML5.
+        <h2>Games</h2>
 
-    </audio>
+        <p>
+            Sélectionne ton jeu et choisis ta plateforme.
+        </p>
 
+    </div>
 
-    <!-- BOUTON MUSIQUE -->
+    <div class="grid">
 
-    <button
-        id="musicButton"
-        class="musicButton"
-        onclick="toggleMusic()">
+        <!-- ANIMAL COMPANY -->
 
-        🎵 Music OFF
+        <article class="card game">
 
-    </button>
+            <div class="cardIcon">🐾</div>
 
+            <span class="gameTag">
+                VR // MULTIPLAYER
+            </span>
 
-    <script>
+            <h3>Animal Company</h3>
 
-        /* =========================
-           NAVIGATION
-        ========================= */
+            <p class="desc">
+                Explore, joue avec tes amis et
+                profite de l'expérience VR.
+            </p>
 
-        function showPage(page) {
+            <div class="gameBtns">
 
-            document
-                .querySelectorAll(".page")
-                .forEach(function(element) {
+                <a
+                    class="btn"
+                    href="https://store.steampowered.com/app/4551040/Animal_Company/"
+                    target="_blank"
+                    rel="noopener">
+                    💻 PC / STEAM
+                </a>
 
-                    element.classList.remove("active");
+                <a
+                    class="btn primary"
+                    href="https://www.animalcompanyvr.com/"
+                    target="_blank"
+                    rel="noopener">
+                    🥽 QUEST
+                </a>
 
-                });
+            </div>
 
+        </article>
 
-            const selectedPage =
-                document.getElementById(page);
+        <!-- GORILLA TAG -->
 
+        <article class="card game">
 
-            if (selectedPage) {
+            <div class="cardIcon">🦍</div>
 
-                selectedPage.classList.add("active");
+            <span class="gameTag">
+                VR // MONKE
+            </span>
 
-            }
+            <h3>Gorilla Tag</h3>
 
-        }
+            <p class="desc">
+                Deviens un monke et joue avec
+                les autres joueurs.
+            </p>
 
+            <div class="gameBtns">
 
-        /* =========================
-           COMPTEUR DE VISITES
-        ========================= */
+                <a
+                    class="btn"
+                    href="https://store.steampowered.com/app/1533390/Gorilla_Tag/"
+                    target="_blank"
+                    rel="noopener">
+                    💻 PC / STEAM
+                </a>
 
-        function updateVisitorCount() {
+                <a
+                    class="btn primary"
+                    href="https://www.meta.com/experiences/gorilla-tag/4979055762136823/"
+                    target="_blank"
+                    rel="noopener">
+                    🥽 QUEST
+                </a>
 
-            let visits =
-                localStorage.getItem("labubuWebVisits");
+            </div>
 
+        </article>
 
-            if (!visits) {
+        <!-- ROBLOX -->
 
-                visits = 0;
+        <article class="card game">
 
-            }
+            <div class="cardIcon">🎮</div>
 
+            <span class="gameTag">
+                CROSS PLATFORM
+            </span>
 
-            visits = parseInt(visits) + 1;
+            <h3>Roblox</h3>
 
+            <p class="desc">
+                Des milliers d'expériences et
+                de jeux à découvrir.
+            </p>
 
-            localStorage.setItem(
-                "labubuWebVisits",
-                visits
-            );
+            <div class="gameBtns">
 
+                <a
+                    class="btn"
+                    href="https://www.roblox.com/download"
+                    target="_blank"
+                    rel="noopener">
+                    💻 PC
+                </a>
 
-            document.getElementById(
-                "visitorCount"
-            ).textContent = visits;
+                <a
+                    class="btn primary"
+                    href="https://www.meta.com/experiences/roblox/5804350713746839/"
+                    target="_blank"
+                    rel="noopener">
+                    🥽 QUEST
+                </a>
 
-        }
+            </div>
 
+        </article>
 
-        /* =========================
-   MUSIQUE
+    </div>
+
+</section>
+
+<!-- =========================
+     MODS
+========================= -->
+
+<section id="mods" class="page">
+
+    <div class="sectionTitle">
+
+        <h2>Mods</h2>
+
+        <p>
+            Downloads disponibles.
+        </p>
+
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+
+            <div class="cardIcon">📦</div>
+
+            <span class="gameTag">
+                DOWNLOAD 01
+            </span>
+
+            <h3>Mod #1</h3>
+
+            <p>
+                Package de mod disponible.
+            </p>
+
+            <br>
+
+            <a
+                class="btn primary"
+                href="https://gofile.io/d/q4it99"
+                target="_blank"
+                rel="noopener">
+                DOWNLOAD
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <div class="cardIcon">📦</div>
+
+            <span class="gameTag">
+                DOWNLOAD 02
+            </span>
+
+            <h3>Mod #2</h3>
+
+            <p>
+                Package de mod disponible.
+            </p>
+
+            <br>
+
+            <a
+                class="btn primary"
+                href="https://gofile.io/d/a60db590-617b-40ca-8086-6ce106ded48b"
+                target="_blank"
+                rel="noopener">
+                DOWNLOAD
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <div class="cardIcon">📦</div>
+
+            <span class="gameTag">
+                DOWNLOAD 03
+            </span>
+
+            <h3>Mod #3</h3>
+
+            <p>
+                Package de mod disponible.
+            </p>
+
+            <br>
+
+            <a
+                class="btn primary"
+                href="https://gofile.io/d/r9pjUQIT"
+                target="_blank"
+                rel="noopener">
+                DOWNLOAD
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     OTHER
+========================= -->
+
+<section id="other" class="page">
+
+    <div class="sectionTitle">
+
+        <h2>Other Web</h2>
+
+        <p>
+            Retrouvez les autres espaces de Labubu.
+        </p>
+
+    </div>
+
+    <div class="grid">
+
+        <a
+            class="card"
+            href="https://guns.lol/labubuclan"
+            target="_blank"
+            rel="noopener"
+            style="text-decoration:none;color:white">
+
+            <div class="cardIcon">🌐</div>
+
+            <h3>Web2</h3>
+
+            <p>
+                Ouvrir le profil Web2.
+            </p>
+
+        </a>
+
+        <a
+            class="card"
+            href="https://discord.gg/2gBvyZJxt"
+            target="_blank"
+            rel="noopener"
+            style="text-decoration:none;color:white">
+
+            <div class="cardIcon">💬</div>
+
+            <h3>Discord</h3>
+
+            <p>
+                Rejoindre le serveur Discord.
+            </p>
+
+        </a>
+
+    </div>
+
+</section>
+
+<!-- =========================
+     CREDITS
+========================= -->
+
+<section id="credit" class="page">
+
+    <div class="sectionTitle">
+
+        <h2>Credits</h2>
+
+        <p>
+            Special thanks ❤️
+        </p>
+
+    </div>
+
+    <div class="credits">
+
+        <div class="credit">LabubuP</div>
+        <div class="credit">LabubuOwner</div>
+        <div class="credit">TTNVR</div>
+        <div class="credit">TTN</div>
+        <div class="credit">LBB</div>
+        <div class="credit">LBBP</div>
+        <div class="credit">LBBO</div>
+
+    </div>
+
+</section>
+
+<div class="footer">
+    LABUBU WEB // X900000 // SYSTEM ONLINE
+</div>
+
+</div>
+</main>
+
+<!-- MUSIC -->
+
+<audio
+    id="music"
+    loop
+    preload="auto">
+
+    <source
+        src="music.mp3"
+        type="audio/mpeg">
+
+</audio>
+
+<button
+    id="musicButton"
+    class="musicButton"
+    onclick="toggleMusic()">
+    🎵 MUSIC OFF
+</button>
+
+<script>
+
+/* =========================
+   NAVIGATION
 ========================= */
 
-const music = document.getElementById("music");
-const musicButton = document.getElementById("musicButton");
+function showPage(page,button){
 
-let musicPlaying = false;
+    document
+        .querySelectorAll(".page")
+        .forEach(function(el){
+            el.classList.remove("active");
+        });
 
-music.volume = 0.5;
+    const selected =
+        document.getElementById(page);
 
-async function toggleMusic() {
+    if(selected){
+        selected.classList.add("active");
+    }
 
-    try {
+    document
+        .querySelectorAll(".nav button")
+        .forEach(function(btn){
+            btn.classList.remove("active");
+        });
 
-        if (!musicPlaying) {
+    if(button){
+        button.classList.add("active");
+    }
 
-            await music.play();
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
 
-            musicPlaying = true;
+/* =========================
+   VISITS
+========================= */
 
-            musicButton.textContent = "🎵 Music ON";
+function updateVisits(){
 
-        } else {
+    let visits =
+        localStorage.getItem("labubuWebVisits");
 
-            music.pause();
+    if(!visits){
+        visits=0;
+    }
 
-            musicPlaying = false;
+    visits=parseInt(visits)+1;
 
-            musicButton.textContent = "🎵 Music OFF";
+    localStorage.setItem(
+        "labubuWebVisits",
+        visits
+    );
 
-        }
+    const visitor =
+        document.getElementById("visitorCount");
 
-    } catch (error) {
+    const stat =
+        document.getElementById("statVisits");
 
-        console.error("Erreur musique :", error);
+    if(visitor){
+        visitor.textContent=
+            visits.toLocaleString("fr-FR");
+    }
 
-        musicButton.textContent = "❌ Music ERROR";
-
+    if(stat){
+        stat.textContent=
+            visits.toLocaleString("fr-FR");
     }
 }
 
+/* =========================
+   CLOCK
+========================= */
 
-        /* =========================
-           PREMIER CLIC = MUSIQUE
-        ========================= */
+function updateClock(){
 
-        document.addEventListener(
-            "click",
-            startMusic
+    const now=new Date();
+
+    const h=
+        String(now.getHours()).padStart(2,"0");
+
+    const m=
+        String(now.getMinutes()).padStart(2,"0");
+
+    const s=
+        String(now.getSeconds()).padStart(2,"0");
+
+    document.getElementById("clock")
+        .textContent=
+        h+":"+m+":"+s;
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+/* =========================
+   MUSIC
+========================= */
+
+const music=
+    document.getElementById("music");
+
+const musicButton=
+    document.getElementById("musicButton");
+
+let musicPlaying=false;
+
+music.volume=.5;
+
+async function toggleMusic(){
+
+    try{
+
+        if(!musicPlaying){
+
+            await music.play();
+
+            musicPlaying=true;
+
+            musicButton.textContent=
+                "🎵 MUSIC ON";
+
+        }else{
+
+            music.pause();
+
+            musicPlaying=false;
+
+            musicButton.textContent=
+                "🎵 MUSIC OFF";
+        }
+
+    }catch(error){
+
+        console.error(
+            "Music error:",
+            error
         );
 
+        musicButton.textContent=
+            "❌ MUSIC ERROR";
+    }
+}
 
-        document.addEventListener(
-            "touchstart",
-            startMusic
-        );
+/* =========================
+   CURSOR GLOW
+========================= */
 
+const cursorGlow=
+    document.getElementById("cursorGlow");
 
-        /* =========================
-           DEMARRAGE
-        ========================= */
+document.addEventListener(
+    "mousemove",
+    function(event){
 
-        updateVisitorCount();
+        cursorGlow.style.left=
+            event.clientX+"px";
 
-    </script>
+        cursorGlow.style.top=
+            event.clientY+"px";
+    }
+);
+
+/* =========================
+   START
+========================= */
+
+updateVisits();
+
+</script>
 
 </body>
 </html>
