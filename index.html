@@ -69,7 +69,6 @@
 
         }
 
-
         /* GROS GLOW CENTRAL */
 
         body::before {
@@ -114,7 +113,6 @@
             }
 
         }
-
 
         /* PARTICULES */
 
@@ -163,7 +161,6 @@
 
         }
 
-
         /* CONTAINER */
 
         .container {
@@ -180,7 +177,6 @@
 
             padding: 25px;
         }
-
 
         /* MENU */
 
@@ -212,7 +208,6 @@
                 inset 0 0 30px rgba(255,255,255,0.03);
 
         }
-
 
         /* TITRE */
 
@@ -254,7 +249,6 @@
 
         }
 
-
         .subtitle {
 
             color: #ffbaba;
@@ -264,7 +258,6 @@
             font-size: 16px;
 
         }
-
 
         /* PAGES */
 
@@ -298,7 +291,6 @@
 
         }
 
-
         /* BOUTONS */
 
         .buttons {
@@ -312,7 +304,6 @@
             gap: 16px;
 
         }
-
 
         button,
         .link-button {
@@ -350,7 +341,6 @@
 
         }
 
-
         button:hover,
         .link-button:hover {
 
@@ -370,14 +360,12 @@
 
         }
 
-
         button:active,
         .link-button:active {
 
             transform: scale(0.97);
 
         }
-
 
         /* RETOUR */
 
@@ -391,7 +379,6 @@
 
         }
 
-
         /* CREDITS */
 
         .credits {
@@ -401,7 +388,6 @@
             font-size: 20px;
 
         }
-
 
         .credits span {
 
@@ -415,6 +401,128 @@
 
         }
 
+        /* COMPTEUR */
+
+        .visitorBox {
+
+            margin: 25px auto 30px auto;
+
+            width: 85%;
+            max-width: 430px;
+
+            padding: 18px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255,0,0,0.18),
+                    rgba(0,0,0,0.45)
+                );
+
+            border: 1px solid rgba(255,255,255,0.15);
+
+            box-shadow:
+                0 0 20px rgba(255,0,0,0.25);
+
+        }
+
+        .visitorTitle {
+
+            font-size: 14px;
+
+            color: #ffbaba;
+
+            margin-bottom: 5px;
+
+        }
+
+        .visitorNumber {
+
+            font-size: 32px;
+
+            font-weight: bold;
+
+            color: white;
+
+            text-shadow:
+                0 0 10px red,
+                0 0 25px red;
+
+        }
+
+        /* GAME CARDS */
+
+        .gameDescription {
+
+            color: #ffbaba;
+
+            margin-bottom: 20px;
+
+            font-size: 15px;
+
+        }
+
+        .gameCard {
+
+            width: 85%;
+            max-width: 430px;
+
+            padding: 20px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,0,0,0.15),
+                    rgba(0,0,0,0.45)
+                );
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            box-shadow:
+                0 0 20px rgba(255,0,0,0.15);
+
+        }
+
+        .gameCard h2 {
+
+            margin-bottom: 8px;
+
+            font-size: 25px;
+
+            text-shadow:
+                0 0 10px red;
+
+        }
+
+        .gameCard p {
+
+            color: #ffbaba;
+
+            margin-bottom: 15px;
+
+            font-size: 14px;
+
+        }
+
+        .installButtons {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 10px;
+
+        }
+
+        .installButtons a {
+
+            width: 100%;
+
+        }
 
         /* BOUTON MUSIQUE */
 
@@ -440,7 +548,6 @@
 
         }
 
-
         /* MOBILE */
 
         @media(max-width:600px) {
@@ -458,14 +565,17 @@
                 width: 95%;
             }
 
+            .gameCard,
+            .visitorBox {
+                width: 95%;
+            }
+
         }
 
     </style>
 </head>
 
-
 <body>
-
 
     <!-- PARTICULES -->
 
@@ -500,7 +610,30 @@
                     Welcome to my website 🔥
                 </p>
 
+                <!-- COMPTEUR -->
+
+                <div class="visitorBox">
+
+                    <div class="visitorTitle">
+                        👀 Visites sur ce navigateur
+                    </div>
+
+                    <div
+                        id="visitorCount"
+                        class="visitorNumber">
+
+                        0
+
+                    </div>
+
+                </div>
+
+
                 <div class="buttons">
+
+                    <button onclick="showPage('games')">
+                        🎮 Games
+                    </button>
 
                     <button onclick="showPage('other')">
                         🌐 Other Web
@@ -515,6 +648,145 @@
                     </button>
 
                 </div>
+
+            </div>
+
+
+            <!-- GAMES -->
+
+            <div id="games" class="page">
+
+                <h1>Games</h1>
+
+                <p class="subtitle">
+                    Install your favorite games
+                </p>
+
+
+                <div class="buttons">
+
+
+                    <!-- ANIMAL COMPANY -->
+
+                    <div class="gameCard">
+
+                        <h2>🐾 Animal Company</h2>
+
+                        <p>
+                            VR multiplayer adventure
+                        </p>
+
+                        <div class="installButtons">
+
+                            <a
+                                class="link-button"
+                                href="https://store.steampowered.com/app/4551040/Animal_Company/"
+                                target="_blank"
+                                rel="noopener">
+
+                                💻 Installer sur PC
+
+                            </a>
+
+                            <a
+                                class="link-button"
+                                href="https://www.animalcompanyvr.com/"
+                                target="_blank"
+                                rel="noopener">
+
+                                🥽 Installer sur Quest
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- GORILLA TAG -->
+
+                    <div class="gameCard">
+
+                        <h2>🦍 Gorilla Tag</h2>
+
+                        <p>
+                            Become monke 🦍
+                        </p>
+
+                        <div class="installButtons">
+
+                            <a
+                                class="link-button"
+                                href="https://store.steampowered.com/app/1533390/Gorilla_Tag/"
+                                target="_blank"
+                                rel="noopener">
+
+                                💻 Installer sur PC
+
+                            </a>
+
+                            <a
+                                class="link-button"
+                                href="https://www.meta.com/experiences/gorilla-tag/4979055762136823/"
+                                target="_blank"
+                                rel="noopener">
+
+                                🥽 Installer sur Quest
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ROBLOX -->
+
+                    <div class="gameCard">
+
+                        <h2>🎮 Roblox</h2>
+
+                        <p>
+                            Play Roblox in flat screen or VR
+                        </p>
+
+                        <div class="installButtons">
+
+                            <a
+                                class="link-button"
+                                href="https://www.roblox.com/download"
+                                target="_blank"
+                                rel="noopener">
+
+                                💻 Installer sur PC
+
+                            </a>
+
+                            <a
+                                class="link-button"
+                                href="https://www.meta.com/experiences/roblox/5804350713746839/"
+                                target="_blank"
+                                rel="noopener">
+
+                                🥽 Installer sur Quest
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    class="back"
+                    onclick="showPage('home')">
+
+                    ← Retour
+
+                </button>
 
             </div>
 
@@ -534,18 +806,9 @@
 
                     <a
                         class="link-button"
-                        href="https://www.canva.com/design/DAHTNwGH0D4/gmbNsVXmaS4VBZMfb2Ckiw/edit"
-                        target="_blank">
-
-                        🎨 Canva
-
-                    </a>
-
-
-                    <a
-                        class="link-button"
                         href="https://guns.lol/labubuclan"
-                        target="_blank">
+                        target="_blank"
+                        rel="noopener">
 
                         🌐 Web2
 
@@ -555,7 +818,8 @@
                     <a
                         class="link-button"
                         href="https://discord.gg/2gBvyZJxt"
-                        target="_blank">
+                        target="_blank"
+                        rel="noopener">
 
                         💬 Discord
 
@@ -593,7 +857,8 @@
                     <a
                         class="link-button"
                         href="https://gofile.io/d/q4it99"
-                        target="_blank">
+                        target="_blank"
+                        rel="noopener">
 
                         📦 Mod #1
 
@@ -603,7 +868,8 @@
                     <a
                         class="link-button"
                         href="https://gofile.io/d/a60db590-617b-40ca-8086-6ce106ded48b"
-                        target="_blank">
+                        target="_blank"
+                        rel="noopener">
 
                         📦 Mod #2
 
@@ -613,7 +879,8 @@
                     <a
                         class="link-button"
                         href="https://gofile.io/d/r9pjUQIT"
-                        target="_blank">
+                        target="_blank"
+                        rel="noopener">
 
                         📦 Mod #3
 
@@ -693,6 +960,7 @@
     <!-- BOUTON MUSIQUE -->
 
     <button
+        id="musicButton"
         class="musicButton"
         onclick="toggleMusic()">
 
@@ -703,8 +971,9 @@
 
     <script>
 
-
-        /* NAVIGATION */
+        /* =========================
+           NAVIGATION
+        ========================= */
 
         function showPage(page) {
 
@@ -717,49 +986,132 @@
                 });
 
 
-            document
-                .getElementById(page)
-                .classList.add("active");
+            const selectedPage =
+                document.getElementById(page);
+
+
+            if (selectedPage) {
+
+                selectedPage.classList.add("active");
+
+            }
 
         }
 
 
-        /* MUSIQUE */
+        /* =========================
+           COMPTEUR DE VISITES
+        ========================= */
+
+        function updateVisitorCount() {
+
+            let visits =
+                localStorage.getItem("labubuWebVisits");
+
+
+            if (!visits) {
+
+                visits = 0;
+
+            }
+
+
+            visits = parseInt(visits) + 1;
+
+
+            localStorage.setItem(
+                "labubuWebVisits",
+                visits
+            );
+
+
+            document.getElementById(
+                "visitorCount"
+            ).textContent = visits;
+
+        }
+
+
+        /* =========================
+           MUSIQUE
+        ========================= */
+
+        const music =
+            document.getElementById("music");
+
+
+        const musicButton =
+            document.getElementById("musicButton");
+
 
         let musicPlaying = false;
 
 
+        async function startMusic() {
+
+            if (musicPlaying) {
+                return;
+            }
+
+
+            try {
+
+                music.volume = 0.5;
+
+                await music.play();
+
+                musicPlaying = true;
+
+                musicButton.innerHTML =
+                    "🎵 Music ON";
+
+
+                document.removeEventListener(
+                    "click",
+                    startMusic
+                );
+
+
+                document.removeEventListener(
+                    "touchstart",
+                    startMusic
+                );
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "Autoplay bloqué :",
+                    error
+                );
+
+            }
+
+        }
+
+
         async function toggleMusic() {
-
-            const music =
-                document.getElementById("music");
-
-            const button =
-                document.querySelector(".musicButton");
-
 
             if (!musicPlaying) {
 
                 try {
 
+                    music.volume = 0.5;
+
                     await music.play();
 
                     musicPlaying = true;
 
-                    button.innerHTML =
+                    musicButton.innerHTML =
                         "🎵 Music ON";
 
                 }
 
                 catch (error) {
 
-                    console.log(
-                        "Impossible de lancer la musique :",
-                        error
-                    );
-
                     alert(
-                        "Impossible de lancer music.MP3. Vérifie que music.MP3 est bien dans le même dossier que index.html."
+                        "La musique ne peut pas être lancée. Vérifie que music.MP3 est bien dans le même dossier que index.html."
                     );
 
                 }
@@ -772,7 +1124,7 @@
 
                 musicPlaying = false;
 
-                button.innerHTML =
+                musicButton.innerHTML =
                     "🎵 Music OFF";
 
             }
@@ -780,8 +1132,29 @@
         }
 
 
-    </script>
+        /* =========================
+           PREMIER CLIC = MUSIQUE
+        ========================= */
 
+        document.addEventListener(
+            "click",
+            startMusic
+        );
+
+
+        document.addEventListener(
+            "touchstart",
+            startMusic
+        );
+
+
+        /* =========================
+           DEMARRAGE
+        ========================= */
+
+        updateVisitorCount();
+
+    </script>
 
 </body>
 </html>
