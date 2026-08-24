@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Labubu Web</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        html, body {
+            min-height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: white;
+
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(255, 0, 0, 0.7),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(150, 0, 0, 0.8),
+                    transparent 32%
+                ),
+                radial-gradient(
+                    circle at 50% 50%,
+                    rgba(255, 20, 20, 0.2),
+                    transparent 45%
+                ),
+                linear-gradient(
+                    135deg,
+                    #030000,
+                    #160000,
+                    #650000,
+                    #160000,
+                    #030000
+                );
+
+            background-size: 250% 250%;
+            animation: backgroundMove 12s ease infinite;
+        }
+
+        @keyframes backgroundMove {
+
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+
+        }
+
+
+        /* GROS GLOW CENTRAL */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+
+            width: 800px;
+            height: 800px;
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255, 0, 0, 0.25),
+                    transparent 65%
+                );
+
+            filter: blur(40px);
+
+            animation: centralGlow 5s ease-in-out infinite alternate;
+
+            pointer-events: none;
+
+            z-index: 0;
+        }
+
+        @keyframes centralGlow {
+
+            from {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0.5;
+            }
+
+            to {
+                transform: translate(-50%, -50%) scale(1.3);
+                opacity: 1;
+            }
+
+        }
+
+
+        /* PARTICULES */
+
+        .particle {
+
+            position: fixed;
+
+            width: 4px;
+            height: 4px;
+
+            border-radius: 50%;
+
+            background: white;
+
+            box-shadow:
+                0 0 8px white,
+                0 0 18px red,
+                0 0 30px red;
+
+            animation: particleMove linear infinite;
+
+            pointer-events: none;
+
+            z-index: 1;
+        }
+
+        @keyframes particleMove {
+
+            0% {
+                transform: translateY(110vh) scale(0);
+                opacity: 0;
+            }
+
+            15% {
+                opacity: 1;
+            }
+
+            80% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1.5);
+                opacity: 0;
+            }
+
+        }
+
+
+        /* CONTAINER */
+
+        .container {
+
+            position: relative;
+            z-index: 5;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+            align-items: center;
+
+            padding: 25px;
+        }
+
+
+        /* MENU */
+
+        .box {
+
+            width: 100%;
+            max-width: 650px;
+
+            padding: 50px 30px;
+
+            text-align: center;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.09),
+                    rgba(0,0,0,0.55)
+                );
+
+            border: 1px solid rgba(255,255,255,0.18);
+
+            border-radius: 30px;
+
+            backdrop-filter: blur(25px);
+
+            box-shadow:
+                0 0 25px rgba(255,0,0,0.4),
+                0 0 70px rgba(255,0,0,0.2),
+                inset 0 0 30px rgba(255,255,255,0.03);
+
+        }
+
+
+        /* TITRE */
+
+        h1 {
+
+            font-size: 52px;
+
+            margin-bottom: 10px;
+
+            letter-spacing: 3px;
+
+            text-shadow:
+                0 0 10px red,
+                0 0 25px red,
+                0 0 50px red;
+
+            animation: titleGlow 2s ease-in-out infinite alternate;
+
+        }
+
+        @keyframes titleGlow {
+
+            from {
+
+                text-shadow:
+                    0 0 10px red,
+                    0 0 25px red;
+
+            }
+
+            to {
+
+                text-shadow:
+                    0 0 15px red,
+                    0 0 40px red,
+                    0 0 80px red;
+
+            }
+
+        }
+
+
+        .subtitle {
+
+            color: #ffbaba;
+
+            margin-bottom: 35px;
+
+            font-size: 16px;
+
+        }
+
+
+        /* PAGES */
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+
+            display: block;
+
+            animation: pageIn 0.4s ease;
+
+        }
+
+        @keyframes pageIn {
+
+            from {
+
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+
+            }
+
+            to {
+
+                opacity: 1;
+                transform: translateY(0) scale(1);
+
+            }
+
+        }
+
+
+        /* BOUTONS */
+
+        .buttons {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            gap: 16px;
+
+        }
+
+
+        button,
+        .link-button {
+
+            width: 85%;
+            max-width: 430px;
+
+            padding: 17px 20px;
+
+            border-radius: 15px;
+
+            border: 1px solid rgba(255,255,255,0.15);
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255,0,0,0.15),
+                    rgba(255,255,255,0.07)
+                );
+
+            color: white;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            transition: all 0.25s ease;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.3);
+
+        }
+
+
+        button:hover,
+        .link-button:hover {
+
+            transform: translateY(-4px) scale(1.04);
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255,0,0,0.8),
+                    rgba(130,0,0,0.9)
+                );
+
+            box-shadow:
+                0 0 15px red,
+                0 0 35px rgba(255,0,0,0.7),
+                0 0 60px rgba(255,0,0,0.3);
+
+        }
+
+
+        button:active,
+        .link-button:active {
+
+            transform: scale(0.97);
+
+        }
+
+
+        /* RETOUR */
+
+        .back {
+
+            margin-top: 25px;
+
+            background: rgba(0,0,0,0.45);
+
+            font-size: 15px;
+
+        }
+
+
+        /* CREDITS */
+
+        .credits {
+
+            line-height: 2;
+
+            font-size: 20px;
+
+        }
+
+
+        .credits span {
+
+            color: #ff7777;
+
+            font-weight: bold;
+
+            text-shadow:
+                0 0 10px red,
+                0 0 20px red;
+
+        }
+
+
+        /* BOUTON MUSIQUE */
+
+        .musicButton {
+
+            position: fixed;
+
+            left: 20px;
+            bottom: 20px;
+
+            width: auto;
+
+            max-width: none;
+
+            padding: 12px 18px;
+
+            font-size: 14px;
+
+            z-index: 100;
+
+            background:
+                rgba(0,0,0,0.65);
+
+        }
+
+
+        /* MOBILE */
+
+        @media(max-width:600px) {
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .box {
+                padding: 40px 15px;
+            }
+
+            button,
+            .link-button {
+                width: 95%;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- PARTICULES -->
+
+    <div class="particle" style="left:5%; animation-duration:8s;"></div>
+    <div class="particle" style="left:12%; animation-duration:11s;"></div>
+    <div class="particle" style="left:20%; animation-duration:9s;"></div>
+    <div class="particle" style="left:28%; animation-duration:13s;"></div>
+    <div class="particle" style="left:36%; animation-duration:10s;"></div>
+    <div class="particle" style="left:44%; animation-duration:14s;"></div>
+    <div class="particle" style="left:52%; animation-duration:9s;"></div>
+    <div class="particle" style="left:60%; animation-duration:12s;"></div>
+    <div class="particle" style="left:68%; animation-duration:10s;"></div>
+    <div class="particle" style="left:76%; animation-duration:15s;"></div>
+    <div class="particle" style="left:84%; animation-duration:11s;"></div>
+    <div class="particle" style="left:92%; animation-duration:13s;"></div>
+
+
+    <!-- MENU -->
+
+    <div class="container">
+
+        <div class="box">
+
+
+            <!-- HOME -->
+
+            <div id="home" class="page active">
+
+                <h1>LABUBU WEB</h1>
+
+                <p class="subtitle">
+                    Welcome to my website 🔥
+                </p>
+
+                <div class="buttons">
+
+                    <button onclick="showPage('other')">
+                        🌐 Other Web
+                    </button>
+
+                    <button onclick="showPage('mods')">
+                        🛠️ Mods
+                    </button>
+
+                    <button onclick="showPage('credit')">
+                        👑 Credit
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- OTHER WEB -->
+
+            <div id="other" class="page">
+
+                <h1>Other Web</h1>
+
+                <p class="subtitle">
+                    Other websites
+                </p>
+
+                <div class="buttons">
+
+
+                    <a
+                        class="link-button"
+                        href="https://www.canva.com/design/DAHTNwGH0D4/gmbNsVXmaS4VBZMfb2Ckiw/edit"
+                        target="_blank">
+
+                        🎨 Canva
+
+                    </a>
+
+
+                    <a
+                        class="link-button"
+                        href="https://guns.lol/labubuclan"
+                        target="_blank">
+
+                        🌐 Web2
+
+                    </a>
+
+
+                    <a
+                        class="link-button"
+                        href="https://discord.gg/2gBvyZJxt"
+                        target="_blank">
+
+                        💬 Discord
+
+                    </a>
+
+
+                </div>
+
+
+                <button
+                    class="back"
+                    onclick="showPage('home')">
+
+                    ← Retour
+
+                </button>
+
+            </div>
+
+
+            <!-- MODS -->
+
+            <div id="mods" class="page">
+
+                <h1>Mods</h1>
+
+                <p class="subtitle">
+                    Downloads
+                </p>
+
+
+                <div class="buttons">
+
+
+                    <a
+                        class="link-button"
+                        href="https://gofile.io/d/q4it99"
+                        target="_blank">
+
+                        📦 Mod #1
+
+                    </a>
+
+
+                    <a
+                        class="link-button"
+                        href="https://gofile.io/d/a60db590-617b-40ca-8086-6ce106ded48b"
+                        target="_blank">
+
+                        📦 Mod #2
+
+                    </a>
+
+
+                    <a
+                        class="link-button"
+                        href="https://gofile.io/d/r9pjUQIT"
+                        target="_blank">
+
+                        📦 Mod #3
+
+                    </a>
+
+
+                </div>
+
+
+                <button
+                    class="back"
+                    onclick="showPage('home')">
+
+                    ← Retour
+
+                </button>
+
+            </div>
+
+
+            <!-- CREDITS -->
+
+            <div id="credit" class="page">
+
+                <h1>Credit</h1>
+
+                <p class="subtitle">
+                    Special Thanks ❤️
+                </p>
+
+
+                <div class="credits">
+
+                    <p><span>LabubuP</span></p>
+                    <p><span>LabubuOwner</span></p>
+                    <p><span>TTNVR</span></p>
+                    <p><span>TTN</span></p>
+                    <p><span>LBB</span></p>
+                    <p><span>LBBP</span></p>
+                    <p><span>LBBO</span></p>
+
+                </div>
+
+
+                <button
+                    class="back"
+                    onclick="showPage('home')">
+
+                    ← Retour
+
+                </button>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- LECTEUR AUDIO -->
+
+    <audio
+        id="music"
+        loop
+        preload="auto">
+
+        <source
+            src="music.MP3"
+            type="audio/mpeg">
+
+        Ton navigateur ne supporte pas l'audio HTML5.
+
+    </audio>
+
+
+    <!-- BOUTON MUSIQUE -->
+
+    <button
+        class="musicButton"
+        onclick="toggleMusic()">
+
+        🎵 Music OFF
+
+    </button>
+
+
+    <script>
+
+
+        /* NAVIGATION */
+
+        function showPage(page) {
+
+            document
+                .querySelectorAll(".page")
+                .forEach(function(element) {
+
+                    element.classList.remove("active");
+
+                });
+
+
+            document
+                .getElementById(page)
+                .classList.add("active");
+
+        }
+
+
+        /* MUSIQUE */
+
+        let musicPlaying = false;
+
+
+        async function toggleMusic() {
+
+            const music =
+                document.getElementById("music");
+
+            const button =
+                document.querySelector(".musicButton");
+
+
+            if (!musicPlaying) {
+
+                try {
+
+                    await music.play();
+
+                    musicPlaying = true;
+
+                    button.innerHTML =
+                        "🎵 Music ON";
+
+                }
+
+                catch (error) {
+
+                    console.log(
+                        "Impossible de lancer la musique :",
+                        error
+                    );
+
+                    alert(
+                        "Impossible de lancer music.MP3. Vérifie que music.MP3 est bien dans le même dossier que index.html."
+                    );
+
+                }
+
+            }
+
+            else {
+
+                music.pause();
+
+                musicPlaying = false;
+
+                button.innerHTML =
+                    "🎵 Music OFF";
+
+            }
+
+        }
+
+
+    </script>
+
+
+</body>
+</html>
