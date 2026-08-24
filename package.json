@@ -1,0 +1,12 @@
+{
+  "name": "labubu-discord-backend",
+  "version": "1.0.0",
+  "description": "Backend Discord Labubu Web",
+  "main": "serveur.js",
+  "scripts": {
+    "start": "node serveur.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
