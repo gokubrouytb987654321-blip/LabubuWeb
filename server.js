@@ -105,7 +105,7 @@ app.get("/callback", async (req, res) => {
                             "application/x-www-form-urlencoded"
                     },
 
-```javascript
+
 body: new URLSearchParams({
     client_id: CLIENT_ID,
     client_secret: CLIENT_SECRET,
