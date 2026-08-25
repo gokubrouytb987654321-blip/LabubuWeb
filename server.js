@@ -18,54 +18,14 @@ const FRONTEND_URL =
 
 
 app.get("/", (req, res) => {
-
-    res.send(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-            <meta charset="UTF-8">
-            <title>Labubu Web API</title>
-        </head>
-
-        <body style="
-            background:#080000;
-            color:white;
-            font-family:Arial;
-            text-align:center;
-            padding-top:100px;
-        ">
-
-            <h1>🔥 Labubu Web Backend</h1>
-
-            <p>Backend Discord opérationnel.</p>
-
-            <a
-                href="/login"
-                style="
-                    display:inline-block;
-                    color:white;
-                    background:#5865F2;
-                    padding:15px 25px;
-                    border-radius:10px;
-                    text-decoration:none;
-                "
-            >
-                Connexion Discord
-            </a>
-
-        </body>
-        </html>
-    `);
-
+    res.send("Labubu Discord Backend OK");
 });
 
 
 app.get("/login", (req, res) => {
 
     if (!CLIENT_ID) {
-        return res.status(500).send(
-            "DISCORD_CLIENT_ID manquant."
-        );
+        return res.status(500).send("DISCORD_CLIENT_ID manquant.");
     }
 
     const params = new URLSearchParams({
@@ -80,7 +40,6 @@ app.get("/login", (req, res) => {
         params.toString();
 
     res.redirect(discordURL);
-
 });
 
 
@@ -89,9 +48,7 @@ app.get("/callback", async (req, res) => {
     const code = req.query.code;
 
     if (!code) {
-        return res.status(400).send(
-            "Code Discord manquant."
-        );
+        return res.status(400).send("Code Discord manquant.");
     }
 
     if (!CLIENT_ID || !CLIENT_SECRET) {
@@ -102,35 +59,32 @@ app.get("/callback", async (req, res) => {
 
     try {
 
+        const tokenParams = new URLSearchParams({
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
+            grant_type: "authorization_code",
+            code: code,
+            redirect_uri: REDIRECT_URI
+        });
+
         const tokenResponse = await fetch(
             "https://discord.com/api/oauth2/token",
             {
                 method: "POST",
-
                 headers: {
                     "Content-Type":
                         "application/x-www-form-urlencoded"
                 },
-
-                body: new URLSearchParams({
-                    client_id: CLIENT_ID,
-                    client_secret: CLIENT_SECRET,
-                    grant_type: "authorization_code",
-                    code: code,
-                    redirect_uri: REDIRECT_URI
-                })
+                body: tokenParams
             }
         );
 
+        const tokenData = await tokenResponse.json();
 
         if (!tokenResponse.ok) {
-
-            const error =
-                await tokenResponse.text();
-
             console.error(
                 "Discord token error:",
-                error
+                tokenData
             );
 
             return res.status(500).send(
@@ -139,29 +93,22 @@ app.get("/callback", async (req, res) => {
         }
 
 
-        const tokenData =
-            await tokenResponse.json();
-
-
         const userResponse = await fetch(
             "https://discord.com/api/users/@me",
             {
                 headers: {
                     Authorization:
-                        `Bearer ${tokenData.access_token}`
+                        "Bearer " + tokenData.access_token
                 }
             }
         );
 
+        const user = await userResponse.json();
 
         if (!userResponse.ok) {
-
-            const error =
-                await userResponse.text();
-
             console.error(
                 "Discord user error:",
-                error
+                user
             );
 
             return res.status(500).send(
@@ -170,14 +117,13 @@ app.get("/callback", async (req, res) => {
         }
 
 
-        const user =
-            await userResponse.json();
-
-
-        const avatar =
-            user.avatar
-                ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=256`
-                : null;
+        const avatar = user.avatar
+            ? "https://cdn.discordapp.com/avatars/" +
+              user.id +
+              "/" +
+              user.avatar +
+              ".png?size=256"
+            : null;
 
 
         const safeUser = {
@@ -188,19 +134,18 @@ app.get("/callback", async (req, res) => {
         };
 
 
-        const encoded =
-            encodeURIComponent(
-                JSON.stringify(safeUser)
-            );
+        const encodedUser = encodeURIComponent(
+            JSON.stringify(safeUser)
+        );
 
 
         res.redirect(
-            `${FRONTEND_URL}?discord_user=${encoded}`
+            FRONTEND_URL +
+            "?discord_user=" +
+            encodedUser
         );
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(
             "Server error:",
@@ -210,9 +155,7 @@ app.get("/callback", async (req, res) => {
         res.status(500).send(
             "Erreur serveur."
         );
-
     }
-
 });
 
 
@@ -220,11 +163,10 @@ app.listen(
     PORT,
     "0.0.0.0",
     () => {
-
         console.log(
-            `Labubu Backend lancé sur le port ${PORT}`
+            "Labubu Backend lancé sur le port " +
+            PORT
         );
-
     }
 );
 ```
