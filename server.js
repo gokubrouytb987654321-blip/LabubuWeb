@@ -1,3 +1,4 @@
+```javascript
 const express = require("express");
 
 const app = express();
@@ -15,41 +16,47 @@ const FRONTEND_URL =
     process.env.FRONTEND_URL ||
     "https://gokubrouytb987654321-blip.github.io/LabubuWeb/";
 
+
 app.get("/", (req, res) => {
+
     res.send(`
+        <!DOCTYPE html>
         <html>
-            <head>
-                <title>Labubu Web API</title>
-            </head>
+        <head>
+            <meta charset="UTF-8">
+            <title>Labubu Web API</title>
+        </head>
 
-            <body style="
-                background:#080000;
-                color:white;
-                font-family:Arial;
-                text-align:center;
-                padding-top:100px;
-            ">
+        <body style="
+            background:#080000;
+            color:white;
+            font-family:Arial;
+            text-align:center;
+            padding-top:100px;
+        ">
 
-                <h1>🔥 Labubu Web Backend</h1>
+            <h1>🔥 Labubu Web Backend</h1>
 
-                <p>Backend Discord opérationnel.</p>
+            <p>Backend Discord opérationnel.</p>
 
-                <a
-                    href="/login"
-                    style="
-                        color:white;
-                        background:#5865F2;
-                        padding:15px 25px;
-                        border-radius:10px;
-                        text-decoration:none;
-                    "
-                >
-                    Connexion Discord
-                </a>
+            <a
+                href="/login"
+                style="
+                    display:inline-block;
+                    color:white;
+                    background:#5865F2;
+                    padding:15px 25px;
+                    border-radius:10px;
+                    text-decoration:none;
+                "
+            >
+                Connexion Discord
+            </a>
 
-            </body>
+        </body>
         </html>
     `);
+
 });
 
 
@@ -73,6 +80,7 @@ app.get("/login", (req, res) => {
         params.toString();
 
     res.redirect(discordURL);
+
 });
 
 
@@ -94,29 +102,25 @@ app.get("/callback", async (req, res) => {
 
     try {
 
-        const tokenResponse =
-            await fetch(
-                "https://discord.com/api/oauth2/token",
-                {
-                    method: "POST",
+        const tokenResponse = await fetch(
+            "https://discord.com/api/oauth2/token",
+            {
+                method: "POST",
 
-                    headers: {
-                        "Content-Type":
-                            "application/x-www-form-urlencoded"
-                    },
+                headers: {
+                    "Content-Type":
+                        "application/x-www-form-urlencoded"
+                },
 
-
-body: new URLSearchParams({
-    client_id: CLIENT_ID,
-    client_secret: CLIENT_SECRET,
-    grant_type: "authorization_code",
-    code: code,
-    redirect_uri: REDIRECT_URI
-})
-```
-
-                }
-            );
+                body: new URLSearchParams({
+                    client_id: CLIENT_ID,
+                    client_secret: CLIENT_SECRET,
+                    grant_type: "authorization_code",
+                    code: code,
+                    redirect_uri: REDIRECT_URI
+                })
+            }
+        );
 
 
         if (!tokenResponse.ok) {
@@ -124,7 +128,10 @@ body: new URLSearchParams({
             const error =
                 await tokenResponse.text();
 
-            console.error(error);
+            console.error(
+                "Discord token error:",
+                error
+            );
 
             return res.status(500).send(
                 "Impossible de terminer la connexion Discord."
@@ -136,19 +143,26 @@ body: new URLSearchParams({
             await tokenResponse.json();
 
 
-        const userResponse =
-            await fetch(
-                "https://discord.com/api/users/@me",
-                {
-                    headers: {
-                        Authorization:
-                            `Bearer ${tokenData.access_token}`
-                    }
+        const userResponse = await fetch(
+            "https://discord.com/api/users/@me",
+            {
+                headers: {
+                    Authorization:
+                        `Bearer ${tokenData.access_token}`
                 }
-            );
+            }
+        );
 
 
         if (!userResponse.ok) {
+
+            const error =
+                await userResponse.text();
+
+            console.error(
+                "Discord user error:",
+                error
+            );
 
             return res.status(500).send(
                 "Impossible de récupérer le profil Discord."
@@ -188,7 +202,10 @@ body: new URLSearchParams({
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Server error:",
+            error
+        );
 
         res.status(500).send(
             "Erreur serveur."
@@ -210,3 +227,4 @@ app.listen(
 
     }
 );
+```
