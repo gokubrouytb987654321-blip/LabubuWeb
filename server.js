@@ -105,14 +105,16 @@ app.get("/callback", async (req, res) => {
                             "application/x-www-form-urlencoded"
                     },
 
-                    body:
-                        new URLSearchParams({
-                            client_id: 1541566571598839818,
-                            client_secret: TwFi_UsJp8HOk07c6C3eQ5SdG22lF1vo,
-                            grant_type: "authorization_code",
-                            code: code,
-                            redirect_uri: REDIRECT_URI
-                        })
+```javascript
+body: new URLSearchParams({
+    client_id: CLIENT_ID,
+    client_secret: CLIENT_SECRET,
+    grant_type: "authorization_code",
+    code: code,
+    redirect_uri: REDIRECT_URI
+})
+```
+
                 }
             );
 
