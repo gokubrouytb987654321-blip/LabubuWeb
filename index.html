@@ -1,0 +1,5089 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1.0">
+
+<meta
+    name="theme-color"
+    content="#030308">
+
+<title>
+    LABUBU WEB // 1.5.00
+</title>
+
+<style>
+
+/* =========================================================
+   LABUBU WEB
+   VERSION 1.5.00
+   FUTURISTIC SYSTEM
+   DIRECT ACCESS EDITION
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+:root{
+
+    --red:#ff1744;
+    --red2:#ff003c;
+    --red3:#ff5274;
+
+    --dark:#020205;
+    --dark2:#07070d;
+
+    --panel:rgba(9,9,17,.72);
+    --panel2:rgba(255,255,255,.035);
+
+    --border:rgba(255,255,255,.11);
+
+    --text:#ffffff;
+
+    --muted:#858596;
+
+    --green:#00ff9d;
+
+    --discord:#5865f2;
+
+}
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body{
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+    color:var(--text);
+
+    background:
+
+        radial-gradient(
+            circle at 15% 15%,
+            rgba(255,0,55,.20),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(120,0,255,.12),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(255,0,60,.06),
+            transparent 45%
+        ),
+
+        linear-gradient(
+            135deg,
+            #010103,
+            #08030a,
+            #020205
+        );
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+}
+
+/* =========================================================
+   BACKGROUND GRID
+========================================================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:-10;
+
+    background:
+
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        55px 55px;
+
+    transform:
+        perspective(600px)
+        rotateX(55deg)
+        scale(1.5);
+
+    transform-origin:
+        center bottom;
+
+    opacity:.45;
+
+    animation:
+        gridMove 10s linear infinite;
+
+}
+
+@keyframes gridMove{
+
+    from{
+
+        background-position:
+            0 0,
+            0 0;
+
+    }
+
+    to{
+
+        background-position:
+            0 110px,
+            110px 0;
+
+    }
+
+}
+
+/* =========================================================
+   SCANLINES
+========================================================= */
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:9999;
+
+    background:
+
+        repeating-linear-gradient(
+            0deg,
+            transparent 0px,
+            transparent 3px,
+            rgba(255,255,255,.018) 4px
+        );
+
+    opacity:.6;
+
+}
+
+/* =========================================================
+   CURSOR
+========================================================= */
+
+.cursorGlow{
+
+    position:fixed;
+
+    width:300px;
+
+    height:300px;
+
+    left:50%;
+
+    top:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    z-index:1;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(255,0,65,.16),
+            transparent 70%
+        );
+
+    filter:blur(15px);
+
+}
+
+/* =========================================================
+   PARTICLES
+========================================================= */
+
+.particle{
+
+    position:fixed;
+
+    width:3px;
+
+    height:3px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    box-shadow:
+
+        0 0 5px #fff,
+        0 0 12px var(--red),
+        0 0 25px var(--red);
+
+    pointer-events:none;
+
+    z-index:-2;
+
+    animation:
+        particleMove linear infinite;
+
+}
+
+@keyframes particleMove{
+
+    0%{
+
+        transform:
+            translateY(110vh)
+            scale(.1);
+
+        opacity:0;
+
+    }
+
+    15%{
+        opacity:1;
+    }
+
+    80%{
+        opacity:1;
+    }
+
+    100%{
+
+        transform:
+            translateY(-10vh)
+            scale(1.5);
+
+        opacity:0;
+
+    }
+
+}
+
+/* =========================================================
+   LOGIN SCREEN
+========================================================= */
+
+#loginScreen{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:10000;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(255,0,60,.13),
+            transparent 35%
+        ),
+
+        rgba(1,1,5,.96);
+
+    backdrop-filter:
+        blur(20px);
+
+    transition:
+        opacity .5s ease,
+        visibility .5s ease;
+
+}
+
+#loginScreen.hidden{
+
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
+
+}
+
+.loginBox{
+
+    position:relative;
+
+    width:100%;
+
+    max-width:520px;
+
+    padding:50px 35px;
+
+    text-align:center;
+
+    overflow:hidden;
+
+    border-radius:30px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.075),
+            rgba(0,0,0,.65)
+        );
+
+    backdrop-filter:
+        blur(35px);
+
+    box-shadow:
+
+        0 40px 120px
+        rgba(0,0,0,.7),
+
+        0 0 70px
+        rgba(255,0,60,.12),
+
+        inset 0 0 50px
+        rgba(255,255,255,.02);
+
+}
+
+.loginBox::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:350px;
+
+    height:350px;
+
+    left:50%;
+
+    top:-220px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(255,0,60,.25),
+            transparent 70%
+        );
+
+    filter:blur(20px);
+
+    pointer-events:none;
+
+}
+
+.loginLogo{
+
+    position:relative;
+
+    font-size:42px;
+
+    font-weight:1000;
+
+    letter-spacing:-2px;
+
+    text-shadow:
+
+        0 0 15px
+        rgba(255,0,60,.9),
+
+        0 0 40px
+        rgba(255,0,60,.4);
+
+}
+
+.loginLogo span{
+
+    color:var(--red);
+
+}
+
+.loginVersion{
+
+    margin-top:8px;
+
+    color:#666677;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size:10px;
+
+    letter-spacing:3px;
+
+}
+
+.loginLine{
+
+    width:100%;
+
+    height:1px;
+
+    margin:30px 0;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,0,60,.5),
+            transparent
+        );
+
+}
+
+.loginTitle{
+
+    font-size:25px;
+
+    font-weight:1000;
+
+    margin-bottom:10px;
+
+}
+
+.loginText{
+
+    color:#777789;
+
+    line-height:1.7;
+
+    font-size:13px;
+
+    margin-bottom:25px;
+
+}
+
+.discordLogin{
+
+    width:100%;
+
+    min-height:55px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:12px;
+
+    border:1px solid
+        rgba(88,101,242,.55);
+
+    border-radius:15px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #5865f2,
+            #404ac0
+        );
+
+    color:white;
+
+    font-size:14px;
+
+    font-weight:1000;
+
+    cursor:pointer;
+
+    box-shadow:
+
+        0 0 30px
+        rgba(88,101,242,.20);
+
+    transition:.25s;
+
+}
+
+.discordLogin:hover{
+
+    transform:
+        translateY(-4px)
+        scale(1.01);
+
+    box-shadow:
+
+        0 0 45px
+        rgba(88,101,242,.35);
+
+}
+
+.discordIcon{
+
+    font-size:22px;
+
+}
+
+.loginSecurity{
+
+    margin-top:22px;
+
+    color:#484858;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size:9px;
+
+    line-height:1.7;
+
+}
+
+/* =========================================================
+   AUTH ERROR
+========================================================= */
+
+.authError{
+
+    display:none;
+
+    margin-bottom:18px;
+
+    padding:12px;
+
+    border-radius:12px;
+
+    border:1px solid
+        rgba(255,23,68,.35);
+
+    background:
+        rgba(255,23,68,.08);
+
+    color:#ff718d;
+
+    font-size:11px;
+
+}
+
+.authError.show{
+
+    display:block;
+
+}
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+    right:0;
+
+    height:72px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:
+        0 35px;
+
+    background:
+        rgba(2,2,7,.76);
+
+    backdrop-filter:
+        blur(25px);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.08);
+
+    z-index:500;
+
+    box-shadow:
+        0 10px 40px
+        rgba(0,0,0,.25);
+
+}
+
+/* =========================================================
+   PROFILE AREA
+========================================================= */
+
+.profileArea{
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    order:-1;
+
+}
+
+.profileButton{
+
+    width:42px;
+
+    height:42px;
+
+    padding:0;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    border:
+        2px solid
+        rgba(255,0,60,.55);
+
+    background:#111;
+
+    cursor:pointer;
+
+    box-shadow:
+
+        0 0 15px
+        rgba(255,0,60,.25);
+
+    transition:.25s;
+
+}
+
+.profileButton:hover{
+
+    transform:
+        scale(1.08);
+
+    border-color:
+        var(--red);
+
+    box-shadow:
+
+        0 0 25px
+        rgba(255,0,60,.5);
+
+}
+
+.profileButton img{
+
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+.profileStatus{
+
+    position:absolute;
+
+    width:11px;
+
+    height:11px;
+
+    right:0;
+
+    bottom:0;
+
+    border-radius:50%;
+
+    background:var(--green);
+
+    border:2px solid #050509;
+
+    box-shadow:
+        0 0 8px var(--green);
+
+}
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+.profileMenu{
+
+    position:absolute;
+
+    top:55px;
+
+    left:0;
+
+    width:260px;
+
+    padding:10px;
+
+    border-radius:18px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.10);
+
+    background:
+        rgba(7,7,14,.94);
+
+    backdrop-filter:
+        blur(30px);
+
+    box-shadow:
+
+        0 25px 70px
+        rgba(0,0,0,.6),
+
+        0 0 30px
+        rgba(255,0,60,.08);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transform:
+        translateY(-8px)
+        scale(.97);
+
+    transition:.22s;
+
+}
+
+.profileArea:hover .profileMenu,
+.profileMenu.open{
+
+    opacity:1;
+
+    visibility:visible;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+}
+
+.profileHeader{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:12px;
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    margin-bottom:8px;
+
+}
+
+.profileHeader img{
+
+    width:44px;
+
+    height:44px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+}
+
+.profileIdentity{
+
+    min-width:0;
+
+}
+
+.profileUsername{
+
+    font-weight:1000;
+
+    font-size:13px;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+.profileTag{
+
+    color:#686878;
+
+    font-size:9px;
+
+    margin-top:4px;
+
+}
+
+.profileItem{
+
+    width:100%;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:12px;
+
+    border:0;
+
+    border-radius:11px;
+
+    background:transparent;
+
+    color:#aaaabb;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    transition:.2s;
+
+}
+
+.profileItem:hover{
+
+    background:
+        rgba(255,255,255,.05);
+
+    color:white;
+
+}
+
+.profileItem.logout:hover{
+
+    background:
+        rgba(255,0,60,.09);
+
+    color:#ff718d;
+
+}
+
+.profileSeparator{
+
+    height:1px;
+
+    margin:7px 0;
+
+    background:
+        rgba(255,255,255,.07);
+
+}
+
+/* =========================================================
+   SETTINGS MODAL
+========================================================= */
+
+.settingsOverlay{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:8000;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+        rgba(0,0,0,.65);
+
+    backdrop-filter:
+        blur(12px);
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.25s;
+
+}
+
+.settingsOverlay.open{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+.settingsBox{
+
+    width:100%;
+
+    max-width:600px;
+
+    max-height:85vh;
+
+    overflow:auto;
+
+    padding:30px;
+
+    border-radius:25px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.11);
+
+    background:
+        rgba(8,8,15,.96);
+
+    box-shadow:
+
+        0 40px 100px
+        rgba(0,0,0,.7),
+
+        0 0 40px
+        rgba(255,0,60,.1);
+
+}
+
+.settingsTop{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:25px;
+
+}
+
+.settingsTop h2{
+
+    font-size:25px;
+
+}
+
+.closeSettings{
+
+    width:38px;
+
+    height:38px;
+
+    border:1px solid
+        rgba(255,255,255,.1);
+
+    border-radius:10px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:18px;
+
+}
+
+.settingRow{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding:18px 0;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.06);
+
+}
+
+.settingInfo strong{
+
+    display:block;
+
+    font-size:13px;
+
+    margin-bottom:5px;
+
+}
+
+.settingInfo span{
+
+    color:#666677;
+
+    font-size:10px;
+
+    line-height:1.5;
+
+}
+
+.toggle{
+
+    position:relative;
+
+    width:46px;
+
+    height:25px;
+
+    flex-shrink:0;
+
+}
+
+.toggle input{
+
+    opacity:0;
+
+    width:0;
+    height:0;
+
+}
+
+.slider{
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:999px;
+
+    background:#22222c;
+
+    border:1px solid
+        rgba(255,255,255,.08);
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.slider::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:17px;
+
+    height:17px;
+
+    left:3px;
+
+    top:3px;
+
+    border-radius:50%;
+
+    background:#888;
+
+    transition:.25s;
+
+}
+
+.toggle input:checked + .slider{
+
+    background:
+        rgba(255,0,60,.25);
+
+    border-color:
+        rgba(255,0,60,.5);
+
+}
+
+.toggle input:checked + .slider::before{
+
+    transform:
+        translateX(20px);
+
+    background:
+        var(--red);
+
+    box-shadow:
+        0 0 10px var(--red);
+
+}
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo{
+
+    position:absolute;
+
+    left:50%;
+
+    transform:
+        translateX(-50%);
+
+    font-size:18px;
+
+    font-weight:1000;
+
+    letter-spacing:4px;
+
+    text-shadow:
+        0 0 10px
+        rgba(255,0,60,.8);
+
+}
+
+.logo span{
+    color:var(--red);
+}
+
+.topCenter{
+
+    position:absolute;
+
+    left:50%;
+
+    transform:
+        translateX(-50%);
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    color:#777786;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    margin-top:42px;
+
+    opacity:.6;
+
+}
+
+.onlineDot{
+
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:var(--green);
+
+    box-shadow:
+
+        0 0 10px var(--green),
+        0 0 20px var(--green);
+
+    animation:
+        onlinePulse 1.4s infinite;
+
+}
+
+@keyframes onlinePulse{
+
+    50%{
+
+        opacity:.3;
+
+        transform:
+            scale(.65);
+
+    }
+
+}
+
+.clock{
+
+    margin-left:auto;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    color:#ddd;
+
+    font-size:13px;
+
+    letter-spacing:1px;
+
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.container{
+
+    position:relative;
+
+    z-index:5;
+
+    min-height:100vh;
+
+    padding:
+        110px 20px 60px;
+
+    display:flex;
+
+    justify-content:center;
+
+}
+
+.shell{
+
+    width:100%;
+
+    max-width:1200px;
+
+}
+
+/* =========================================================
+   SYSTEM HEADER
+========================================================= */
+
+.systemHeader{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:15px;
+
+    color:#555565;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size:10px;
+
+    letter-spacing:1px;
+
+}
+
+.systemHeader .green{
+    color:var(--green);
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    position:relative;
+
+    min-height:470px;
+
+    padding:
+        65px 55px;
+
+    overflow:hidden;
+
+    border-radius:32px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.075),
+            rgba(0,0,0,.58)
+        );
+
+    backdrop-filter:
+        blur(30px);
+
+    box-shadow:
+
+        0 40px 100px
+        rgba(0,0,0,.55),
+
+        inset 0 0 60px
+        rgba(255,255,255,.015),
+
+        0 0 100px
+        rgba(255,0,60,.06);
+
+}
+
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:650px;
+    height:650px;
+
+    right:-300px;
+    top:-330px;
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(255,0,60,.27),
+            transparent 67%
+        );
+
+    filter:blur(15px);
+
+    animation:
+        heroOrb 5s
+        ease-in-out
+        infinite
+        alternate;
+
+}
+
+@keyframes heroOrb{
+
+    from{
+        transform:scale(.8);
+    }
+
+    to{
+        transform:scale(1.2);
+    }
+
+}
+
+.hero::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    right:0;
+
+    height:1px;
+
+    top:50%;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,0,60,.5),
+            transparent
+        );
+
+    opacity:.25;
+
+    animation:
+        scanLine 5s
+        linear infinite;
+
+}
+
+@keyframes scanLine{
+
+    0%{
+        top:10%;
+    }
+
+    100%{
+        top:90%;
+    }
+
+}
+
+/* =========================================================
+   BADGE
+========================================================= */
+
+.badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:
+        8px 13px;
+
+    border-radius:999px;
+
+    border:
+        1px solid
+        rgba(255,0,60,.35);
+
+    background:
+        rgba(255,0,60,.08);
+
+    color:#ff7894;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    margin-bottom:20px;
+
+}
+
+/* =========================================================
+   HERO TITLE
+========================================================= */
+
+.hero h1{
+
+    position:relative;
+
+    z-index:2;
+
+    font-size:
+        clamp(
+            52px,
+            9vw,
+            110px
+        );
+
+    line-height:.86;
+
+    letter-spacing:-7px;
+
+    font-weight:1000;
+
+    text-shadow:
+
+        0 0 10px
+        rgba(255,0,60,.9),
+
+        0 0 35px
+        rgba(255,0,60,.55),
+
+        0 0 90px
+        rgba(255,0,60,.25);
+
+}
+
+.hero h1 span{
+
+    color:var(--red);
+
+    position:relative;
+
+}
+
+.hero h1 span::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    bottom:-5px;
+
+    width:100%;
+    height:3px;
+
+    background:
+        var(--red);
+
+    box-shadow:
+
+        0 0 15px
+        var(--red),
+
+        0 0 30px
+        var(--red);
+
+    animation:
+        titleLine 2s
+        ease-in-out
+        infinite
+        alternate;
+
+}
+
+@keyframes titleLine{
+
+    from{
+
+        opacity:.4;
+
+        transform:
+            scaleX(.7);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            scaleX(1);
+
+    }
+
+}
+
+/* =========================================================
+   HERO DESCRIPTION
+========================================================= */
+
+.heroDescription{
+
+    position:relative;
+
+    z-index:2;
+
+    max-width:680px;
+
+    margin-top:30px;
+
+    color:#888899;
+
+    line-height:1.8;
+
+    font-size:15px;
+
+}
+
+/* =========================================================
+   HERO BUTTONS
+========================================================= */
+
+.heroActions{
+
+    position:relative;
+
+    z-index:5;
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:12px;
+
+    margin-top:32px;
+
+}
+
+.btn{
+
+    position:relative;
+
+    overflow:hidden;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    min-height:48px;
+
+    padding:
+        13px 22px;
+
+    border-radius:14px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    background:
+        rgba(255,255,255,.04);
+
+    color:#fff;
+
+    font-size:12px;
+
+    font-weight:900;
+
+    letter-spacing:.5px;
+
+    text-decoration:none;
+
+    cursor:pointer;
+
+    transition:
+        .25s
+        ease;
+
+}
+
+.btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:-120%;
+
+    top:0;
+
+    width:100%;
+    height:100%;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.15),
+            transparent
+        );
+
+    transition:.55s;
+
+}
+
+.btn:hover::before{
+    left:120%;
+}
+
+.btn:hover{
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(255,0,60,.5);
+
+    box-shadow:
+        0 0 25px
+        rgba(255,0,60,.18);
+
+}
+
+.btn.primary{
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #ff1744,
+            #a6002f
+        );
+
+    border-color:
+        #ff4566;
+
+    box-shadow:
+        0 0 30px
+        rgba(255,0,60,.25);
+
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:12px;
+
+    margin-top:15px;
+
+}
+
+.stat{
+
+    position:relative;
+
+    padding:20px;
+
+    overflow:hidden;
+
+    border-radius:18px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    background:
+        rgba(255,255,255,.025);
+
+    backdrop-filter:
+        blur(20px);
+
+}
+
+.stat::after{
+
+    content:"";
+
+    position:absolute;
+
+    right:-25px;
+    bottom:-25px;
+
+    width:80px;
+    height:80px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,0,60,.08);
+
+    filter:blur(10px);
+
+}
+
+.stat small{
+
+    display:block;
+
+    color:#555566;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+    margin-bottom:8px;
+
+}
+
+.stat strong{
+
+    font-size:20px;
+
+    font-weight:1000;
+
+}
+
+/* =========================================================
+   NAV
+========================================================= */
+
+.nav{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(9,1fr);
+
+    gap:8px;
+
+    margin:
+        22px 0;
+
+    padding:7px;
+
+    border-radius:18px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    background:
+        rgba(0,0,0,.35);
+
+    backdrop-filter:
+        blur(25px);
+
+}
+
+.nav button{
+
+    min-height:48px;
+
+    border:
+        1px solid transparent;
+
+    border-radius:12px;
+
+    background:
+        transparent;
+
+    color:#666677;
+
+    font-size:11px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.nav button:hover{
+
+    color:#fff;
+
+    background:
+        rgba(255,255,255,.04);
+
+}
+
+.nav button.active{
+
+    color:#fff;
+
+    background:
+        rgba(255,0,60,.10);
+
+    border-color:
+        rgba(255,0,60,.28);
+
+    box-shadow:
+
+        inset 0 0 20px
+        rgba(255,0,60,.05),
+
+        0 0 20px
+        rgba(255,0,60,.08);
+
+}
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page{
+    display:none;
+}
+
+.page.active{
+
+    display:block;
+
+    animation:
+        pageIn
+        .45s
+        ease;
+
+}
+
+@keyframes pageIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(20px)
+            scale(.98);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.sectionHeader{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:space-between;
+
+    margin:
+        30px 0 18px;
+
+}
+
+.sectionHeader h2{
+
+    font-size:35px;
+
+    letter-spacing:-1px;
+
+}
+
+.sectionHeader p{
+
+    color:#666677;
+
+    font-size:13px;
+
+    margin-top:6px;
+
+}
+
+.sectionCode{
+
+    color:#555565;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size:10px;
+
+}
+
+/* =========================================================
+   CARDS
+========================================================= */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:14px;
+
+}
+
+.card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:25px;
+
+    min-height:220px;
+
+    border-radius:22px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    background:
+
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(0,0,0,.4)
+        );
+
+    backdrop-filter:
+        blur(20px);
+
+    transition:
+        .3s
+        ease;
+
+}
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:140px;
+    height:140px;
+
+    right:-70px;
+    bottom:-70px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,0,60,.12);
+
+    filter:blur(20px);
+
+}
+
+.card:hover{
+
+    transform:
+        translateY(-7px);
+
+    border-color:
+        rgba(255,0,60,.38);
+
+    box-shadow:
+
+        0 20px 50px
+        rgba(0,0,0,.35),
+
+        0 0 30px
+        rgba(255,0,60,.09);
+
+}
+
+.cardIcon{
+
+    font-size:34px;
+
+    margin-bottom:18px;
+
+}
+
+.card h3{
+
+    font-size:21px;
+
+    margin-bottom:9px;
+
+}
+
+.card p{
+
+    color:#777789;
+
+    font-size:13px;
+
+    line-height:1.6;
+
+}
+
+/* =========================================================
+   VISITOR PANEL
+========================================================= */
+
+.visitorPanel{
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:32px;
+
+    border-radius:24px;
+
+    border:
+        1px solid
+        rgba(255,0,60,.2);
+
+    background:
+
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(255,0,60,.15),
+            transparent 35%
+        ),
+
+        rgba(255,255,255,.025);
+
+}
+
+.visitorNumber{
+
+    font-size:
+        clamp(
+            45px,
+            8vw,
+            70px
+        );
+
+    font-weight:1000;
+
+    line-height:1;
+
+    text-shadow:
+
+        0 0 20px
+        var(--red),
+
+        0 0 50px
+        rgba(255,0,60,.35);
+
+}
+
+.visitorLabel{
+
+    color:#666677;
+
+    font-size:12px;
+
+    margin-top:8px;
+
+}
+
+/* =========================================================
+   GAME
+========================================================= */
+
+.game{
+    min-height:350px;
+}
+
+.gameTag{
+
+    display:inline-block;
+
+    padding:
+        5px 8px;
+
+    border-radius:6px;
+
+    color:#ff718d;
+
+    background:
+        rgba(255,0,60,.08);
+
+    border:
+        1px solid
+        rgba(255,0,60,.12);
+
+    font-size:8px;
+
+    letter-spacing:1.5px;
+
+    margin-bottom:14px;
+
+}
+
+.game h3{
+    font-size:25px;
+}
+
+.gameDescription{
+
+    min-height:55px;
+
+    margin:
+        10px 0 18px;
+
+}
+
+.gameButtons{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+.gameButtons .btn{
+    width:100%;
+}
+
+/* =========================================================
+   MODS
+========================================================= */
+
+.modCard{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    min-height:250px;
+
+}
+
+.modNumber{
+
+    color:
+        rgba(255,255,255,.25);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size:10px;
+
+    letter-spacing:2px;
+
+    margin-bottom:15px;
+
+}
+
+/* =========================================================
+   CREDITS
+========================================================= */
+
+.credits{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:10px;
+
+}
+
+.credit{
+
+    position:relative;
+
+    padding:19px;
+
+    text-align:center;
+
+    border-radius:15px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    background:
+        rgba(255,255,255,.025);
+
+    color:#ccc;
+
+    font-weight:900;
+
+    transition:.25s;
+
+}
+
+.credit:hover{
+
+    color:#fff;
+
+    transform:
+        scale(1.04);
+
+    border-color:
+        rgba(255,0,60,.35);
+
+    box-shadow:
+        0 0 25px
+        rgba(255,0,60,.1);
+
+}
+
+/* =========================================================
+   TERMINAL
+========================================================= */
+
+.terminal{
+
+    margin-top:15px;
+
+    padding:22px;
+
+    border-radius:20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    background:
+        rgba(0,0,0,.45);
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size:11px;
+
+    color:#777789;
+
+}
+
+.terminalLine{
+    margin:5px 0;
+}
+
+.terminalLine .green{
+    color:var(--green);
+}
+
+.terminalLine .red{
+    color:var(--red3);
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+
+    padding:
+        35px 0 10px;
+
+    text-align:center;
+
+    color:#444454;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+}
+
+/* =========================================================
+   MUSIC
+========================================================= */
+
+.musicButton{
+
+    position:fixed;
+
+    right:20px;
+    bottom:20px;
+
+    z-index:600;
+
+    min-width:145px;
+
+    padding:
+        13px 18px;
+
+    border-radius:14px;
+
+    border:
+        1px solid
+        rgba(255,0,60,.3);
+
+    background:
+        rgba(3,3,8,.82);
+
+    backdrop-filter:
+        blur(25px);
+
+    color:#fff;
+
+    font-size:11px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 0 25px
+        rgba(255,0,60,.1);
+
+    transition:.25s;
+
+}
+
+.musicButton:hover{
+
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(255,0,60,.6);
+
+    box-shadow:
+        0 0 35px
+        rgba(255,0,60,.2);
+
+}
+
+
+.musicPlayer{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:600;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px;
+    border-radius:16px;
+    border:1px solid rgba(255,0,60,.3);
+    background:rgba(3,3,8,.88);
+    backdrop-filter:blur(25px);
+    box-shadow:0 0 25px rgba(255,0,60,.1);
+}
+
+.musicPlayer .musicButton{
+    position:static;
+    right:auto;
+    bottom:auto;
+    min-width:130px;
+}
+
+.musicSelect{
+    min-height:42px;
+    max-width:150px;
+    padding:0 12px;
+    border-radius:11px;
+    border:1px solid rgba(255,255,255,.12);
+    background:#090910;
+    color:#fff;
+    font-size:11px;
+    font-weight:900;
+    cursor:pointer;
+    outline:none;
+}
+
+.musicSelect:focus{
+    border-color:rgba(255,0,60,.65);
+    box-shadow:0 0 15px rgba(255,0,60,.15);
+}
+
+@media(max-width:600px){
+    .musicPlayer{
+        right:10px;
+        bottom:10px;
+        left:10px;
+    }
+
+    .musicPlayer .musicButton,
+    .musicSelect{
+        flex:1;
+        min-width:0;
+    }
+}
+
+
+/* =========================================================
+   ACCOUNT SYSTEM + SETTINGS V1.2
+========================================================= */
+.accountGate{
+    position:fixed; inset:0; z-index:5000;
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+    background:
+        radial-gradient(circle at 50% 20%,rgba(255,0,60,.16),transparent 35%),
+        rgba(2,2,7,.97);
+    backdrop-filter:blur(20px);
+}
+.accountGate.hidden{display:none}
+.authBox{
+    width:min(520px,100%);
+    border:1px solid rgba(255,0,60,.32);
+    border-radius:24px;
+    padding:28px;
+    background:rgba(8,8,15,.96);
+    box-shadow:0 0 70px rgba(255,0,60,.14);
+}
+.authLogo{font-size:24px;font-weight:1000;letter-spacing:3px;margin-bottom:8px}
+.authLogo span{color:var(--red3)}
+.authSub{color:#777789;font-size:12px;margin-bottom:22px}
+.authTabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
+.authTab,.authSubmit,.accountAction{
+    min-height:44px;border-radius:12px;border:1px solid rgba(255,255,255,.1);
+    background:rgba(255,255,255,.035);color:#fff;font-weight:900;cursor:pointer;
+}
+.authTab.active,.authSubmit{
+    border-color:rgba(255,0,60,.45);background:rgba(255,0,60,.12);
+}
+.authPanel{display:none}.authPanel.active{display:block}
+.authField{margin:12px 0}
+.authField label{display:block;color:#aaaabd;font-size:11px;font-weight:900;margin-bottom:7px}
+.authField input{
+    width:100%;box-sizing:border-box;min-height:46px;padding:0 14px;
+    border-radius:12px;border:1px solid rgba(255,255,255,.1);
+    background:#080810;color:#fff;outline:none;font-size:16px;
+}
+.authField input:focus{border-color:rgba(255,0,60,.55)}
+.authSubmit{width:100%;margin-top:10px}
+.authMessage{min-height:20px;margin-top:12px;color:#ff5577;font-size:11px}
+.accountBar{
+    display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 14px;
+    padding:12px;border:1px solid rgba(255,255,255,.07);
+    border-radius:15px;background:rgba(255,255,255,.02);
+}
+.accountName{font-weight:1000;color:#fff;margin-right:auto}
+.accountAction{padding:0 13px}
+.settingsGrid{
+    display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+}
+.siteSetting{
+    display:flex;align-items:center;justify-content:space-between;gap:14px;
+    min-height:72px;padding:13px 14px;border-radius:14px;
+    border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.025);
+}
+.siteSettingInfo{min-width:0}
+.siteSettingInfo strong{display:block;color:#fff;font-size:12px;margin-bottom:4px}
+.siteSettingInfo span{display:block;color:#6f6f80;font-size:10px;line-height:1.35}
+.settingControl{flex:0 0 auto}
+.settingControl input[type="checkbox"]{width:20px;height:20px;accent-color:#ff003c}
+.settingControl select,.settingControl input[type="range"]{
+    max-width:135px;
+}
+.settingControl select{
+    min-height:36px;border-radius:9px;border:1px solid rgba(255,255,255,.1);
+    background:#090910;color:#fff;padding:0 8px;
+}
+.settingSectionTitle{
+    grid-column:1/-1;margin-top:12px;padding:10px 0 5px;
+    color:var(--red3);font-family:"Courier New",monospace;
+    font-size:11px;letter-spacing:2px;font-weight:900;
+}
+body.compactMode .card{padding:16px}
+body.roundedOff *{border-radius:2px!important}
+body.noAnimations *,body.noAnimations *::before,body.noAnimations *::after{
+    animation:none!important;transition:none!important;scroll-behavior:auto!important;
+}
+body.largeText{font-size:18px}
+body.highContrast{filter:contrast(1.15)}
+body.hideFooter .footer{display:none}
+body.hideStats .stats{display:none}
+body.hideHero .hero{display:none}
+body.hideTerminal .terminal{display:none}
+body.wideShell .container{max-width:1500px}
+body.centerText .page{text-align:center}
+body.dimCards .card{opacity:.78}
+body.cardBorders .card{border-width:2px}
+body.glassOff .card,body.glassOff .topbar{backdrop-filter:none!important}
+@media(max-width:760px){
+    .settingsGrid{grid-template-columns:1fr}
+}
+
+
+/* =========================================================
+   OWNER PANEL V1.3
+========================================================= */
+.ownerOnlyNav{display:none}
+body.ownerMode .ownerOnlyNav{display:block}
+.ownerTableWrap{overflow-x:auto;border:1px solid rgba(255,255,255,.08);border-radius:16px}
+.ownerTable{width:100%;border-collapse:collapse;min-width:760px}
+.ownerTable th,.ownerTable td{padding:12px;border-bottom:1px solid rgba(255,255,255,.07);text-align:left;font-size:11px}
+.ownerTable th{color:var(--red3);font-family:"Courier New",monospace;letter-spacing:1px}
+.ownerTable td{color:#b9b9c8}
+.ownerInput{min-height:38px;padding:0 10px;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:#080810;color:#fff}
+.ownerBtn{min-height:38px;padding:0 10px;border-radius:9px;border:1px solid rgba(255,0,60,.3);background:rgba(255,0,60,.09);color:#fff;font-weight:900;cursor:pointer;margin:2px}
+.ownerDanger{border-color:rgba(255,70,90,.55);background:rgba(255,40,70,.13)}
+.ownerNote{margin:12px 0;padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,.08);color:#858596;font-size:11px}
+
+
+/* =========================================================
+   GLOBAL CHAT + OWNER CROWN V1.5
+========================================================= */
+.ownerCrownBadge{
+    display:none;
+    width:max-content;
+    margin:0 auto 7px;
+    padding:5px 12px;
+    border:1px solid rgba(255,215,0,.55);
+    border-radius:999px;
+    background:rgba(255,215,0,.10);
+    color:#ffd700;
+    font-size:10px;
+    font-weight:1000;
+    letter-spacing:2px;
+    text-shadow:0 0 12px rgba(255,215,0,.65);
+    box-shadow:0 0 20px rgba(255,215,0,.08);
+}
+body.ownerMode .ownerCrownBadge{display:block}
+.chatShell{
+    display:grid;
+    grid-template-rows:minmax(360px,520px) auto;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:20px;
+    overflow:hidden;
+    background:rgba(0,0,0,.28);
+}
+.chatMessages{
+    overflow-y:auto;
+    padding:18px;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+.chatMessage{
+    max-width:min(680px,88%);
+    padding:11px 13px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.035);
+}
+.chatMessage.mine{
+    align-self:flex-end;
+    border-color:rgba(255,0,60,.25);
+    background:rgba(255,0,60,.07);
+}
+.chatMessage.ownerMessage{
+    border-color:rgba(255,215,0,.35);
+    box-shadow:inset 3px 0 0 rgba(255,215,0,.7);
+}
+.chatMeta{
+    display:flex;
+    gap:8px;
+    align-items:center;
+    flex-wrap:wrap;
+    margin-bottom:5px;
+    color:#777789;
+    font-size:9px;
+}
+.chatUser{color:#fff;font-weight:1000}
+.chatOwner{color:#ffd700;font-weight:1000}
+.chatText{color:#d5d5df;font-size:12px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.chatComposer{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:9px;
+    padding:12px;
+    border-top:1px solid rgba(255,255,255,.08);
+    background:rgba(4,4,10,.82);
+}
+.chatInput{
+    min-width:0;
+    min-height:44px;
+    border-radius:12px;
+    border:1px solid rgba(255,255,255,.1);
+    background:#080810;
+    color:#fff;
+    padding:0 14px;
+    outline:none;
+    font-size:16px;
+}
+.chatInput:focus{border-color:rgba(255,0,60,.55)}
+.chatSend{
+    min-height:44px;
+    padding:0 18px;
+    border-radius:12px;
+    border:1px solid rgba(255,0,60,.4);
+    background:rgba(255,0,60,.12);
+    color:#fff;
+    font-weight:1000;
+    cursor:pointer;
+}
+.chatStatus{margin:0 0 10px;color:#777789;font-size:10px;font-family:"Courier New",monospace}
+@media(max-width:600px){
+    .chatComposer{grid-template-columns:1fr}
+    .chatSend{width:100%}
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:850px){
+
+    .topbar{
+        padding:0 16px;
+    }
+
+    .topCenter{
+        display:none;
+    }
+
+    .logo{
+        font-size:14px;
+    }
+
+    .profileButton{
+        width:38px;
+        height:38px;
+    }
+
+    .hero{
+        padding:45px 25px;
+    }
+
+    .stats{
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .credits{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:600px){
+
+    .container{
+        padding:
+            100px 10px 50px;
+    }
+
+    .hero{
+
+        min-height:auto;
+
+        padding:
+            40px 20px;
+
+    }
+
+    .hero h1{
+
+        font-size:54px;
+
+        letter-spacing:-4px;
+
+    }
+
+    .heroActions{
+        flex-direction:column;
+    }
+
+    .heroActions .btn{
+        width:100%;
+    }
+
+    .nav{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .sectionHeader{
+        display:block;
+    }
+
+    .sectionCode{
+        margin-top:10px;
+    }
+
+    .musicButton{
+        right:10px;
+        bottom:10px;
+    }
+
+    .profileMenu{
+
+        left:0;
+
+        width:
+            calc(100vw - 30px);
+
+        max-width:280px;
+
+    }
+
+    .loginBox{
+        padding:40px 22px;
+    }
+
+}
+
+/* =========================================================
+   LOGGED OUT BODY
+========================================================= */
+
+body.authLocked{
+    overflow:hidden;
+}
+
+/* =========================================================
+   PROFILE DATA CARD
+========================================================= */
+
+.profileDataCard{
+
+    margin-top:15px;
+
+    padding:25px;
+
+    border-radius:22px;
+
+    border:
+        1px solid
+        rgba(88,101,242,.2);
+
+    background:
+
+        radial-gradient(
+            circle at 90% 10%,
+            rgba(88,101,242,.12),
+            transparent 35%
+        ),
+
+        rgba(255,255,255,.025);
+
+}
+
+.profileDataHead{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.profileDataAvatar{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:
+        2px solid
+        rgba(88,101,242,.6);
+
+    box-shadow:
+        0 0 25px
+        rgba(88,101,242,.2);
+
+}
+
+.profileDataName{
+
+    font-size:22px;
+
+    font-weight:1000;
+
+}
+
+.profileDataUsername{
+
+    color:#686878;
+
+    font-size:11px;
+
+    margin-top:5px;
+
+}
+
+.discordBadge{
+
+    display:inline-block;
+
+    margin-top:8px;
+
+    padding:5px 8px;
+
+    border-radius:6px;
+
+    background:
+        rgba(88,101,242,.12);
+
+    color:#8b94ff;
+
+    font-size:8px;
+
+    letter-spacing:1px;
+
+}
+
+/* =========================================================
+   SETTINGS NOTIFICATION
+========================================================= */
+
+.toast{
+
+    position:fixed;
+
+    right:20px;
+
+    top:90px;
+
+    z-index:9000;
+
+    padding:
+        13px 18px;
+
+    border-radius:13px;
+
+    border:
+        1px solid
+        rgba(0,255,157,.25);
+
+    background:
+        rgba(5,15,12,.94);
+
+    color:#8fffd0;
+
+    font-family:
+        "Courier New",
+        monospace;
+
+    font-size:10px;
+
+    opacity:0;
+
+    transform:
+        translateX(20px);
+
+    pointer-events:none;
+
+    transition:.3s;
+
+}
+
+.toast.show{
+
+    opacity:1;
+
+    transform:
+        translateX(0);
+
+}
+
+</style>
+
+</head>
+
+<body>
+<!-- ACCOUNT GATE -->
+<div class="accountGate" id="accountGate">
+    <div class="authBox">
+        <div class="authLogo">LABUBU<span>//</span>ACCOUNT</div>
+        <div class="authSub">Connecte-toi ou crée un compte Labubu Cloud pour retrouver tes réglages sur tous tes appareils.</div>
+
+        <div class="authTabs">
+            <button class="authTab active" id="loginTab" onclick="switchAuth('login')">CONNEXION</button>
+            <button class="authTab" id="registerTab" onclick="switchAuth('register')">CRÉER UN COMPTE</button>
+        </div>
+
+        <div class="authPanel active" id="loginPanel">
+            <div class="authField"><label>PSEUDO</label><input id="loginUser" autocomplete="username" maxlength="24"></div>
+            <div class="authField"><label>MOT DE PASSE</label><input id="loginPass" type="password" autocomplete="current-password" maxlength="64"></div>
+            <button class="authSubmit" onclick="loginAccount()">SE CONNECTER</button>
+        </div>
+
+        <div class="authPanel" id="registerPanel">
+            <div class="authField"><label>PSEUDO</label><input id="registerUser" autocomplete="username" maxlength="24"></div>
+            <div class="authField"><label>MOT DE PASSE</label><input id="registerPass" type="password" autocomplete="new-password" maxlength="64"></div>
+            <div class="authField"><label>CONFIRMER LE MOT DE PASSE</label><input id="registerPass2" type="password" autocomplete="new-password" maxlength="64"></div>
+            <button class="authSubmit" onclick="registerAccount()">CRÉER MON COMPTE</button>
+        </div>
+        <div class="authMessage" id="authMessage"></div>
+    </div>
+</div>
+
+
+<!-- =======================================================
+     PARTICLES
+======================================================= -->
+
+<div class="particle" style="left:3%;animation-duration:8s"></div>
+<div class="particle" style="left:8%;animation-duration:11s"></div>
+<div class="particle" style="left:14%;animation-duration:9s"></div>
+<div class="particle" style="left:20%;animation-duration:13s"></div>
+<div class="particle" style="left:27%;animation-duration:10s"></div>
+<div class="particle" style="left:34%;animation-duration:14s"></div>
+<div class="particle" style="left:41%;animation-duration:8s"></div>
+<div class="particle" style="left:48%;animation-duration:12s"></div>
+<div class="particle" style="left:55%;animation-duration:10s"></div>
+<div class="particle" style="left:62%;animation-duration:15s"></div>
+<div class="particle" style="left:69%;animation-duration:9s"></div>
+<div class="particle" style="left:76%;animation-duration:13s"></div>
+<div class="particle" style="left:83%;animation-duration:11s"></div>
+<div class="particle" style="left:90%;animation-duration:8s"></div>
+<div class="particle" style="left:96%;animation-duration:14s"></div>
+
+<div
+    class="cursorGlow"
+    id="cursorGlow">
+</div>
+
+<!-- =======================================================
+     TOAST
+======================================================= -->
+
+<div
+    class="toast"
+    id="toast">
+
+    SETTING UPDATED
+
+</div>
+
+<!-- =======================================================
+     SETTINGS
+======================================================= -->
+
+<div
+    class="settingsOverlay"
+    id="settingsOverlay">
+
+    <div class="settingsBox">
+
+        <div class="settingsTop">
+
+            <h2>
+                ⚙️ Settings
+            </h2>
+
+            <button
+                class="closeSettings"
+                onclick="closeSettings()">
+
+                ×
+
+            </button>
+
+        </div>
+
+        <div class="settingRow">
+
+            <div class="settingInfo">
+
+                <strong>
+                    ✨ Interface Effects
+                </strong>
+
+                <span>
+                    Active les effets visuels
+                    de l'interface.
+                </span>
+
+            </div>
+
+            <label class="toggle">
+
+                <input
+                    id="effectsToggle"
+                    type="checkbox"
+                    checked
+                    onchange="saveSetting('effects')">
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+        <div class="settingRow">
+
+            <div class="settingInfo">
+
+                <strong>
+                    💡 Cursor Glow
+                </strong>
+
+                <span>
+                    Affiche le halo lumineux
+                    autour du curseur.
+                </span>
+
+            </div>
+
+            <label class="toggle">
+
+                <input
+                    id="cursorToggle"
+                    type="checkbox"
+                    checked
+                    onchange="saveSetting('cursor')">
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+        <div class="settingRow">
+
+            <div class="settingInfo">
+
+                <strong>
+                    🔴 Red Cyber Theme
+                </strong>
+
+                <span>
+                    Conserve le thème rouge
+                    futuriste de Labubu Web.
+                </span>
+
+            </div>
+
+            <label class="toggle">
+
+                <input
+                    type="checkbox"
+                    checked
+                    disabled>
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+        <div class="settingRow">
+
+            <div class="settingInfo">
+
+                <strong>
+                    🎵 Music
+                </strong>
+
+                <span>
+                    Utilise le bouton musique
+                    en bas à droite.
+                </span>
+
+            </div>
+
+            <label class="toggle">
+
+                <input
+                    id="musicSetting"
+                    type="checkbox"
+                    checked
+                    onchange="saveSetting('music')">
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+        <div class="terminal">
+
+            <div class="terminalLine">
+
+                <span class="green">
+                    [ACCESS]
+                </span>
+
+                Direct access active. No Discord login required.
+
+            </div>
+
+            <div class="terminalLine">
+
+                <span class="green">
+                    [SITE]
+                </span>
+
+                Preferences stored locally.
+
+            </div>
+
+            <div class="terminalLine">
+
+                <span class="red">
+                    [BUILD]
+                </span>
+
+                LABUBU WEB // 1.5.00
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =======================================================
+     TOP BAR
+======================================================= -->
+
+<header class="topbar">
+
+    <!-- QUICK SETTINGS -->
+    <div class="profileArea">
+        <div class="ownerCrownBadge">👑 OWNER 👑</div>
+        <button class="profileItem" onclick="openSettings()" style="
+            width:auto;
+            padding:11px 15px;
+            border:1px solid rgba(255,0,60,.30);
+            background:rgba(255,0,60,.08);
+            color:#fff;
+        ">
+            ⚙️ SETTINGS
+        </button>
+    </div>
+
+    <div class="logo">
+
+        LABUBU<span>//</span>WEB
+
+    </div>
+
+    <div class="topCenter">
+
+        <div class="onlineDot"></div>
+
+        SYSTEM ONLINE
+
+    </div>
+
+    <div
+        class="clock"
+        id="clock">
+
+        00:00:00
+
+    </div>
+
+</header>
+
+<!-- =======================================================
+     MAIN
+======================================================= -->
+
+<main class="container">
+
+<div class="shell">
+
+    <div class="systemHeader">
+
+        <span>
+            LABUBU_OS / WEB_INTERFACE
+        </span>
+
+        <span class="green">
+            BUILD 1.5.00
+        </span>
+
+    </div>
+
+    <!-- ===================================================
+         HERO
+    =================================================== -->
+
+    <section class="hero">
+
+        <div class="badge">
+
+            ⚡ FUTURISTIC SYSTEM // 1.5.00
+
+        </div>
+
+        <h1>
+
+            LABUBU<br>
+
+            <span>WEB</span>
+
+        </h1>
+
+        <p class="heroDescription">
+
+            Bienvenue dans la nouvelle génération de
+            Labubu Web. Une interface futuriste regroupant
+            tes jeux, tes mods, tes liens et ton univers
+            dans un seul système.
+
+        </p>
+
+        <div class="heroActions">
+
+            <button
+                class="btn primary"
+                onclick="showPage('games')">
+
+                🎮 EXPLORE GAMES
+
+            </button>
+
+            <button
+                class="btn"
+                onclick="showPage('mods')">
+
+                🛠️ OPEN MODS
+
+            </button>
+
+            <button
+                class="btn"
+                onclick="showPage('other')">
+
+                🌐 NETWORK
+
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- ===================================================
+         STATS
+    =================================================== -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <small>
+                SYSTEM
+            </small>
+
+            <strong
+                style="color:#00ff9d">
+
+                ONLINE
+
+            </strong>
+
+        </div>
+
+        <div class="stat">
+
+            <small>
+                VISITS
+            </small>
+
+            <strong
+                id="statVisits">
+
+                0
+
+            </strong>
+
+        </div>
+
+        <div class="stat">
+
+            <small>
+                GAMES
+            </small>
+
+            <strong>
+                03
+            </strong>
+
+        </div>
+
+        <div class="stat">
+
+            <small>
+                VERSION
+            </small>
+
+            <strong>
+                1.5.00
+            </strong>
+
+        </div>
+
+    </section>
+
+    <!-- ===================================================
+         NAV
+    =================================================== -->
+
+    <nav class="nav">
+
+        <button
+            class="active"
+            onclick="showPage('home',this)">
+
+            🏠 HOME
+
+        </button>
+
+        <button
+            onclick="showPage('games',this)">
+
+            🎮 GAMES
+
+        </button>
+
+        <button
+            onclick="showPage('mods',this)">
+
+            🛠️ MODS
+
+        </button>
+
+        <button
+            onclick="showPage('other',this)">
+
+            🌐 OTHER
+
+        </button>
+
+        <button
+            onclick="showPage('chat',this); openGlobalChat()">
+
+            💬 CHAT
+
+        </button>
+
+        <button
+            onclick="showPage('discord',this)">
+
+            💬 DISCORD
+
+        </button>
+
+        <button
+            class="ownerOnlyNav"
+            onclick="showPage('owner',this)">
+
+            🔐 OWNER
+
+        </button>
+
+        <button
+            onclick="showPage('siteSettings',this)">
+
+            ⚙️ SETTINGS
+
+        </button>
+
+        <button
+            onclick="showPage('credit',this)">
+
+            👑 CREDITS
+
+        </button>
+
+    </nav>
+
+    <!-- ===================================================
+         HOME
+    =================================================== -->
+
+    <section
+        id="home"
+        class="page active">
+
+        <div class="sectionHeader">
+
+            <div>
+
+                <h2>
+                    Dashboard
+                </h2>
+
+                <p>
+                    Labubu Web control center.
+                </p>
+
+            </div>
+
+            <div class="sectionCode">
+
+                HOME://01
+
+            </div>
+
+        </div>
+
+        <div class="visitorPanel">
+
+            <div class="badge">
+
+                👁 VISITOR DATABASE
+
+            </div>
+
+            <div
+                class="visitorNumber"
+                id="visitorCount">
+
+                0
+
+            </div>
+
+            <div class="visitorLabel">
+
+                visites enregistrées sur ce navigateur
+
+            </div>
+
+        </div>
+
+        <!-- =================================================
+             DISCORD PROFILE
+        ================================================= -->
+
+        <div
+            class="profileDataCard"
+            id="profileDataCard">
+
+            <div class="profileDataHead">
+
+                <img
+                    id="homeProfileAvatar"
+                    class="profileDataAvatar"
+                    src=""
+                    alt="Discord Avatar">
+
+                <div>
+
+                    <div
+                        id="homeProfileName"
+                        class="profileDataName">
+
+                        Discord User
+
+                    </div>
+
+                    <div
+                        id="homeProfileUsername"
+                        class="profileDataUsername">
+
+                        @user
+
+                    </div>
+
+                    <div class="discordBadge">
+
+                        DISCORD AUTHENTICATED
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div
+            class="grid"
+            style="margin-top:15px">
+
+            <div class="card">
+
+                <div class="cardIcon">
+                    ⚡
+                </div>
+
+                <h3>
+                    Hyper Interface
+                </h3>
+
+                <p>
+                    Interface rapide, animée et
+                    pensée pour une navigation
+                    futuriste.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <div class="cardIcon">
+                    🥽
+                </div>
+
+                <h3>
+                    Quest Ready
+                </h3>
+
+                <p>
+                    Interface compatible avec les
+                    navigateurs du Meta Quest.
+                </p>
+
+            </div>
+
+            <div class="card">
+
+                <div class="cardIcon">
+                    🔴
+                </div>
+
+                <h3>
+                    Cyber Core
+                </h3>
+
+                <p>
+                    Glow, HUD, particules, scanlines
+                    et effets holographiques.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="terminal">
+
+            <div class="terminalLine">
+
+                <span class="green">
+                    [ONLINE]
+                </span>
+
+                Labubu Web system initialized.
+
+            </div>
+
+            <div class="terminalLine">
+
+                <span class="red">
+                    [VERSION]
+                </span>
+
+                LABUBU_WEB_1.5.00
+
+            </div>
+
+            <div class="terminalLine">
+
+                <span class="green">
+                    [STATUS]
+                </span>
+
+                All systems operational.
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ===================================================
+         GAMES
+    =================================================== -->
+
+    <section
+        id="games"
+        class="page">
+
+        <div class="sectionHeader">
+
+            <div>
+
+                <h2>
+                    Games
+                </h2>
+
+                <p>
+                    Choose your platform.
+                </p>
+
+            </div>
+
+            <div class="sectionCode">
+                GAMES://03
+            </div>
+
+        </div>
+
+        <div class="grid">
+
+            <article class="card game">
+
+                <div class="cardIcon">
+                    🐾
+                </div>
+
+                <span class="gameTag">
+                    VR // MULTIPLAYER
+                </span>
+
+                <h3>
+                    Animal Company
+                </h3>
+
+                <p class="gameDescription">
+                    Explore et joue avec tes amis
+                    dans cette expérience VR.
+                </p>
+
+                <div class="gameButtons">
+
+                    <a
+                        class="btn"
+                        href="https://store.steampowered.com/app/4551040/Animal_Company/"
+                        target="_blank"
+                        rel="noopener">
+
+                        💻 INSTALL PC
+
+                    </a>
+
+                    <a
+                        class="btn primary"
+                        href="https://www.animalcompanyvr.com/"
+                        target="_blank"
+                        rel="noopener">
+
+                        🥽 INSTALL QUEST
+
+                    </a>
+
+                </div>
+
+            </article>
+
+            <article class="card game">
+
+                <div class="cardIcon">
+                    🦍
+                </div>
+
+                <span class="gameTag">
+                    VR // MONKE
+                </span>
+
+                <h3>
+                    Gorilla Tag
+                </h3>
+
+                <p class="gameDescription">
+                    Become monke. Grimpe, cours et
+                    joue avec les autres.
+                </p>
+
+                <div class="gameButtons">
+
+                    <a
+                        class="btn"
+                        href="https://store.steampowered.com/app/1533390/Gorilla_Tag/"
+                        target="_blank"
+                        rel="noopener">
+
+                        💻 INSTALL PC
+
+                    </a>
+
+                    <a
+                        class="btn primary"
+                        href="https://www.meta.com/experiences/gorilla-tag/4979055762136823/"
+                        target="_blank"
+                        rel="noopener">
+
+                        🥽 INSTALL QUEST
+
+                    </a>
+
+                </div>
+
+            </article>
+
+            <article class="card game">
+
+                <div class="cardIcon">
+                    🎮
+                </div>
+
+                <span class="gameTag">
+                    CROSS PLATFORM
+                </span>
+
+                <h3>
+                    Roblox
+                </h3>
+
+                <p class="gameDescription">
+                    Explore des milliers
+                    d'expériences Roblox.
+                </p>
+
+                <div class="gameButtons">
+
+                    <a
+                        class="btn"
+                        href="https://www.roblox.com/download"
+                        target="_blank"
+                        rel="noopener">
+
+                        💻 INSTALL PC
+
+                    </a>
+
+                    <a
+                        class="btn primary"
+                        href="https://www.meta.com/experiences/roblox/5804350713746839/"
+                        target="_blank"
+                        rel="noopener">
+
+                        🥽 INSTALL QUEST
+
+                    </a>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+    <!-- ===================================================
+         MODS
+    =================================================== -->
+
+    <section
+        id="mods"
+        class="page">
+
+        <div class="sectionHeader">
+
+            <div>
+
+                <h2>
+                    Mods
+                </h2>
+
+                <p>
+                    Available downloads.
+                </p>
+
+            </div>
+
+            <div class="sectionCode">
+                MODS://03
+            </div>
+
+        </div>
+
+        <div class="grid">
+
+            <div class="card modCard">
+
+                <div>
+
+                    <div class="modNumber">
+                        PACKAGE_001
+                    </div>
+
+                    <div class="cardIcon">
+                        📦
+                    </div>
+
+                    <h3>
+                        Mod #1
+                    </h3>
+
+                    <p>
+                        Mod package disponible
+                        au téléchargement.
+                    </p>
+
+                </div>
+
+                <a
+                    class="btn primary"
+                    href="https://gofile.io/d/q4it99"
+                    target="_blank"
+                    rel="noopener">
+
+                    DOWNLOAD
+
+                </a>
+
+            </div>
+
+            <div class="card modCard">
+
+                <div>
+
+                    <div class="modNumber">
+                        PACKAGE_002
+                    </div>
+
+                    <div class="cardIcon">
+                        📦
+                    </div>
+
+                    <h3>
+                        Mod #2
+                    </h3>
+
+                    <p>
+                        Mod package disponible
+                        au téléchargement.
+                    </p>
+
+                </div>
+
+                <a
+                    class="btn primary"
+                    href="https://gofile.io/d/a60db590-617b-40ca-8086-6ce106ded48b"
+                    target="_blank"
+                    rel="noopener">
+
+                    DOWNLOAD
+
+                </a>
+
+            </div>
+
+            <div class="card modCard">
+
+                <div>
+
+                    <div class="modNumber">
+                        PACKAGE_003
+                    </div>
+
+                    <div class="cardIcon">
+                        📦
+                    </div>
+
+                    <h3>
+                        Mod #3
+                    </h3>
+
+                    <p>
+                        Mod package disponible
+                        au téléchargement.
+                    </p>
+
+                </div>
+
+                <a
+                    class="btn primary"
+                    href="https://gofile.io/d/r9pjUQIT"
+                    target="_blank"
+                    rel="noopener">
+
+                    DOWNLOAD
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ===================================================
+         OTHER
+    =================================================== -->
+
+    <section
+        id="other"
+        class="page">
+
+        <div class="sectionHeader">
+
+            <div>
+
+                <h2>
+                    Other Web
+                </h2>
+
+                <p>
+                    Labubu network.
+                </p>
+
+            </div>
+
+            <div class="sectionCode">
+                NETWORK://02
+            </div>
+
+        </div>
+
+        <div class="grid">
+
+            <a
+                class="card"
+                href="https://guns.lol/labubuclan"
+                target="_blank"
+                rel="noopener"
+                style="
+                    text-decoration:none;
+                    color:white;
+                ">
+
+                <div class="cardIcon">
+                    🌐
+                </div>
+
+                <h3>
+                    Web2
+                </h3>
+
+                <p>
+                    Open external profile.
+                </p>
+
+            </a>
+
+            <a
+                class="card"
+                href="https://discord.gg/2gBvyZJxt"
+                target="_blank"
+                rel="noopener"
+                style="
+                    text-decoration:none;
+                    color:white;
+                ">
+
+                <div class="cardIcon">
+                    💬
+                </div>
+
+                <h3>
+                    Discord
+                </h3>
+
+                <p>
+                    Join the Labubu community.
+                </p>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         GLOBAL CHAT
+    =================================================== -->
+    <section id="chat" class="page">
+        <div class="sectionHeader">
+            <div>
+                <h2>Global Chat</h2>
+                <p>Discute avec les autres comptes Labubu Web connectés.</p>
+            </div>
+            <div class="sectionCode">CHAT://GLOBAL</div>
+        </div>
+
+        <div class="chatStatus" id="chatStatus">● CLOUD CHAT READY</div>
+
+        <div class="chatShell">
+            <div class="chatMessages" id="chatMessages">
+                <div class="chatStatus">Chargement des messages...</div>
+            </div>
+            <form class="chatComposer" id="chatForm">
+                <input
+                    id="chatInput"
+                    class="chatInput"
+                    maxlength="300"
+                    autocomplete="off"
+                    placeholder="Écris un message..."
+                    aria-label="Message">
+                <button class="chatSend" type="submit">ENVOYER</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ===================================================
+         DISCORD SERVERS
+    =================================================== -->
+
+    <section
+        id="discord"
+        class="page">
+
+        <div class="sectionHeader">
+            <div>
+                <h2>Discord Servers</h2>
+                <p>Rejoins les serveurs de la communauté.</p>
+            </div>
+
+            <div class="sectionCode">
+                COMMUNITY://02
+            </div>
+        </div>
+
+        <div class="grid">
+
+            <article class="card modCard">
+                <div>
+                    <div class="modNumber">SERVER // 01</div>
+                    <div class="cardIcon">🌸</div>
+                    <h3>LabubuMods</h3>
+                    <p>
+                        Serveur Discord LabubuMods. Clique ci-dessous pour ouvrir
+                        l'invitation Discord.
+                    </p>
+                </div>
+
+                <a
+                    class="btn primary"
+                    href="https://discord.gg/rq8tdSEFCs"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    💬 REJOINDRE LABUBUMODS
+                </a>
+            </article>
+
+            <article class="card modCard">
+                <div>
+                    <div class="modNumber">SERVER // 02</div>
+                    <div class="cardIcon">🐵</div>
+                    <h3>Bouboukid</h3>
+                    <p>
+                        Serveur Discord Bouboukid. Clique ci-dessous pour ouvrir
+                        l'invitation Discord.
+                    </p>
+                </div>
+
+                <a
+                    class="btn primary"
+                    href="https://discord.gg/JGZzn36ARS"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    💬 REJOINDRE BOUBOUKID
+                </a>
+            </article>
+
+        </div>
+
+        <div class="terminal">
+            <div class="terminalLine">
+                <span class="green">[COMMUNITY]</span>
+                2 Discord servers available.
+            </div>
+            <div class="terminalLine">
+                <span class="red">[SECURITY]</span>
+                External invitations open in a new tab.
+            </div>
+        </div>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         OWNER
+    =================================================== -->
+    <section id="owner" class="page">
+        <div class="sectionHeader">
+            <div>
+                <h2>Owner Panel</h2>
+                <p>Gestion des comptes Labubu Cloud sur tous les appareils.</p>
+            </div>
+            <div class="sectionCode">OWNER://TTN</div>
+        </div>
+
+        <div class="ownerNote">
+            🔐 Les mots de passe existants ne sont jamais affichés : le serveur conserve uniquement leur hash.
+            L'Owner peut définir un nouveau mot de passe pour un compte.
+        </div>
+
+        <div class="accountBar">
+            <div class="accountName">👑 TTNOWNER // ACCOUNT DATABASE</div>
+            <button class="accountAction" onclick="renderOwnerAccounts()">REFRESH</button>
+        </div>
+
+        <div class="ownerTableWrap">
+            <table class="ownerTable">
+                <thead>
+                    <tr>
+                        <th>PSEUDO</th>
+                        <th>CRÉÉ LE</th>
+                        <th>NOUVEAU PSEUDO</th>
+                        <th>NOUVEAU MDP</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody id="ownerAccountsBody"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ===================================================
+         SITE SETTINGS
+    =================================================== -->
+    <section id="siteSettings" class="page">
+        <div class="sectionHeader">
+            <div><h2>Settings</h2><p>50 réglages synchronisés avec ton compte Labubu Cloud.</p></div>
+            <div class="sectionCode">SETTINGS://50</div>
+        </div>
+
+        <div class="accountBar">
+            <span>👤</span>
+            <div>
+                <div class="ownerCrownBadge">👑 OWNER 👑</div>
+                <div class="accountName" id="settingsAccountName">Aucun compte</div>
+            </div>
+            <button class="accountAction" onclick="resetProfileSettings()">RESET SETTINGS</button>
+            <button class="accountAction" onclick="logoutAccount()">DÉCONNEXION</button>
+        </div>
+
+        <div class="settingsGrid">
+            <div class="settingSectionTitle">LABUBU PROFILE SETTINGS // 50 OPTIONS</div>
+            <div class="siteSetting">
+  <div class="siteSettingInfo"><strong>01. Interface Effects</strong><span>Particules et effets visuels.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="effects" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>02. Cursor Glow</strong><span>Halo lumineux du curseur.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="cursor" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>03. Music Player</strong><span>Afficher le lecteur musique.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="musicPlayer" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>04. Animations</strong><span>Animations générales du site.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="animations" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>05. Compact Cards</strong><span>Cartes plus petites.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="compact" onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>06. Rounded UI</strong><span>Coins arrondis.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="rounded" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>07. Large Text</strong><span>Texte plus grand.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="largeText" onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>08. High Contrast</strong><span>Augmente le contraste.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="contrast" onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>09. Show Footer</strong><span>Afficher le footer.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="footer" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>10. Show Stats</strong><span>Afficher les statistiques.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="stats" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>11. Show Hero</strong><span>Afficher la bannière principale.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="hero" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>12. Show Terminals</strong><span>Afficher les blocs terminal.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="terminals" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>13. Wide Layout</strong><span>Utiliser une interface plus large.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="wide" onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>14. Center Page Text</strong><span>Centrer le contenu des pages.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="centerText" onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>15. Dim Cards</strong><span>Réduire légèrement l'éclat des cartes.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="dimCards" onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>16. Strong Card Borders</strong><span>Bordures de cartes renforcées.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="cardBorders" onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>17. Glass Effect</strong><span>Effet verre / blur.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="glass" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>18. Remember Last Page</strong><span>Rouvrir la dernière catégorie.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="rememberPage" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>19. Smooth Scroll</strong><span>Défilement fluide.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="smoothScroll" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>20. Show Clock</strong><span>Afficher l'horloge.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="clock" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>21. Show Visitor Counter</strong><span>Afficher le compteur de visites.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="visitors" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>22. Show System Status</strong><span>Afficher SYSTEM ONLINE.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="systemStatus" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>23. Music Volume 25%</strong><span>Volume faible par défaut.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="volume25" onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>24. Music Volume 50%</strong><span>Volume moyen par défaut.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="volume50" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>25. Music Volume 75%</strong><span>Volume élevé par défaut.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="volume75" onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>26. Loop Music</strong><span>Répéter la musique.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="musicLoop" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>27. Auto Resume Music</strong><span>Relancer la musique après changement de piste.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="autoResume" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>28. Remember Music</strong><span>Mémoriser la piste choisie.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="rememberMusic" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>29. Button Hover FX</strong><span>Effets au survol des boutons.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="buttonHover" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>30. Card Hover FX</strong><span>Effets au survol des cartes.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="cardHover" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>31. Glow Effects</strong><span>Activer les lueurs rouges.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="glow" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>32. Background Grid</strong><span>Afficher la grille de fond.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="backgroundGrid" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>33. Background Particles</strong><span>Afficher les particules de fond.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="backgroundParticles" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>34. Reduced Motion</strong><span>Réduire les mouvements.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="reducedMotion" onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>35. Dense Navigation</strong><span>Navigation plus compacte.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="denseNav" onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>36. Sticky Topbar</strong><span>Garder la barre supérieure visible.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="stickyTopbar" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>37. Uppercase Buttons</strong><span>Boutons en majuscules.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="uppercaseButtons" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>38. Show Section Codes</strong><span>Afficher HOME://01, etc.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="sectionCodes" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>39. Show Card Icons</strong><span>Afficher les icônes des cartes.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="cardIcons" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>40. Show Mod Numbers</strong><span>Afficher MOD // 01, etc.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="modNumbers" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>41. Show Game Numbers</strong><span>Afficher GAME // 01, etc.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="gameNumbers" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>42. Show Discord Numbers</strong><span>Afficher SERVER // 01, etc.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="discordNumbers" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>43. Focus Outline</strong><span>Contour visible au clavier.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="focusOutline" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>44. Music Toasts</strong><span>Notification lors du changement de musique.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="musicToasts" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>45. Setting Toasts</strong><span>Notification lors d'un réglage.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="settingToasts" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>46. Save Instantly</strong><span>Sauvegarder chaque changement immédiatement.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="saveInstant" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>47. Profile Greeting</strong><span>Afficher le pseudo dans Settings.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="profileGreeting" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>48. Confirm Logout</strong><span>Demander confirmation avant déconnexion.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="confirmLogout" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>49. Reset Warning</strong><span>Confirmer avant reset des réglages.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="resetWarning" checked onchange="changeProfileSetting(this)"></div>
+</div><div class="siteSetting">
+  <div class="siteSettingInfo"><strong>50. Cyber Mode</strong><span>Conserver le style Labubu cyber rouge.</span></div>
+  <div class="settingControl"><input type="checkbox" data-setting="cyberMode" checked onchange="changeProfileSetting(this)"></div>
+</div>
+        </div>
+    </section>
+
+    <!-- ===================================================
+         CREDITS
+    =================================================== -->
+
+    <section
+        id="credit"
+        class="page">
+
+        <div class="sectionHeader">
+
+            <div>
+
+                <h2>
+                    Credits
+                </h2>
+
+                <p>
+                    Special thanks ❤️
+                </p>
+
+            </div>
+
+            <div class="sectionCode">
+                CREDITS://07
+            </div>
+
+        </div>
+
+        <div class="credits">
+
+            <div class="credit">
+                LabubuP
+            </div>
+
+            <div class="credit">
+                LabubuOwner
+            </div>
+
+            <div class="credit">
+                TTNVR
+            </div>
+
+            <div class="credit">
+                TTN
+            </div>
+
+            <div class="credit">
+                LBB
+            </div>
+
+            <div class="credit">
+                LBBP
+            </div>
+
+            <div class="credit">
+                LBBO
+            </div>
+
+        </div>
+
+        <div class="terminal">
+
+            <div class="terminalLine">
+
+                <span class="green">
+                    [CREDITS]
+                </span>
+
+                Thank you for visiting.
+
+            </div>
+
+            <div class="terminalLine">
+
+                <span class="red">
+                    [BUILD]
+                </span>
+
+                LABUBU WEB // 1.5.00
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ===================================================
+         FOOTER
+    =================================================== -->
+
+    <footer class="footer">
+
+        LABUBU WEB //
+        SYSTEM X900000 //
+        VERSION 1.5.00 //
+        ALL SYSTEMS ONLINE
+
+    </footer>
+
+</div>
+
+</main>
+
+<!-- =======================================================
+     MUSIC
+======================================================= -->
+
+<audio id="music" loop preload="auto">
+    <source id="musicSource" src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="musicPlayer">
+    <select
+        id="musicSelect"
+        class="musicSelect"
+        onchange="changeMusic(this.value)"
+        aria-label="Choisir une musique">
+        <option value="music.mp3">🎵 Music 1</option>
+        <option value="music2.mp3">🎵 Music 2</option>
+        <option value="music3.mp3">🎵 Music 3</option>
+        <option value="music4.mp3">🎵 Music 4</option>
+    </select>
+
+    <button
+        id="musicButton"
+        class="musicButton"
+        onclick="toggleMusic()">
+        ▶ MUSIC OFF
+    </button>
+</div>
+
+<script>
+/* =========================================================
+   LABUBU WEB // DIRECT ACCESS SYSTEM
+========================================================= */
+
+function openSettings(){
+    const overlay = document.getElementById("settingsOverlay");
+    if(overlay) overlay.classList.add("open");
+}
+
+function closeSettings(){
+    const overlay = document.getElementById("settingsOverlay");
+    if(overlay) overlay.classList.remove("open");
+}
+
+function loadSettings(){
+    const effects = localStorage.getItem("labubuEffects");
+    const cursor = localStorage.getItem("labubuCursor");
+    const musicSetting = localStorage.getItem("labubuMusic");
+
+    if(effects !== null){
+        document.getElementById("effectsToggle").checked = effects === "true";
+    }
+
+    if(cursor !== null){
+        document.getElementById("cursorToggle").checked = cursor === "true";
+    }
+
+    if(musicSetting !== null){
+        document.getElementById("musicSetting").checked = musicSetting === "true";
+    }
+
+    applySettings();
+}
+
+function saveSetting(type){
+    if(type === "effects"){
+        localStorage.setItem(
+            "labubuEffects",
+            document.getElementById("effectsToggle").checked
+        );
+    }
+
+    if(type === "cursor"){
+        localStorage.setItem(
+            "labubuCursor",
+            document.getElementById("cursorToggle").checked
+        );
+    }
+
+    if(type === "music"){
+        localStorage.setItem(
+            "labubuMusic",
+            document.getElementById("musicSetting").checked
+        );
+    }
+
+    applySettings();
+    showToast("SETTING UPDATED");
+}
+
+function applySettings(){
+    const effects = document.getElementById("effectsToggle").checked;
+    const cursor = document.getElementById("cursorToggle").checked;
+
+    document.querySelectorAll(".particle").forEach(function(particle){
+        particle.style.display = effects ? "" : "none";
+    });
+
+    const glow = document.getElementById("cursorGlow");
+    if(glow){
+        glow.style.display = (effects && cursor) ? "block" : "none";
+    }
+
+    const musicEnabled = document.getElementById("musicSetting").checked;
+    const player = document.querySelector(".musicPlayer");
+
+    if(player){
+        player.style.display = musicEnabled ? "flex" : "none";
+    }
+
+    if(!musicEnabled && music && musicPlaying){
+        music.pause();
+        musicPlaying = false;
+        updateMusicButton();
+    }
+}
+
+let toastTimer = null;
+
+function showToast(message){
+    const toast = document.getElementById("toast");
+    if(!toast) return;
+
+    toast.textContent = message;
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){
+        toast.classList.remove("show");
+    }, 1800);
+}
+
+function showPage(page, button){
+    document.querySelectorAll(".page").forEach(function(element){
+        element.classList.remove("active");
+    });
+
+    const selectedPage = document.getElementById(page);
+    if(selectedPage){
+        selectedPage.classList.add("active");
+    }
+
+    document.querySelectorAll(".nav button").forEach(function(element){
+        element.classList.remove("active");
+    });
+
+    if(button){
+        button.classList.add("active");
+    }
+
+    window.scrollTo({top:0, behavior:"smooth"});
+}
+
+function updateVisitorCount(){
+    let visits = parseInt(localStorage.getItem("labubuWebVisits") || "0", 10);
+    visits++;
+
+    localStorage.setItem("labubuWebVisits", visits);
+
+    const formatted = visits.toLocaleString("fr-FR");
+    const visitor = document.getElementById("visitorCount");
+    const stats = document.getElementById("statVisits");
+
+    if(visitor) visitor.textContent = formatted;
+    if(stats) stats.textContent = formatted;
+}
+
+function updateClock(){
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2,"0");
+    const minutes = String(now.getMinutes()).padStart(2,"0");
+    const seconds = String(now.getSeconds()).padStart(2,"0");
+
+    const clock = document.getElementById("clock");
+    if(clock){
+        clock.textContent = hours + ":" + minutes + ":" + seconds;
+    }
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+const music = document.getElementById("music");
+const musicButton = document.getElementById("musicButton");
+const musicSelect = document.getElementById("musicSelect");
+let musicPlaying = false;
+
+if(music){
+    music.volume = .5;
+}
+
+const savedTrack = localStorage.getItem("labubuTrack") || "music.mp3";
+
+if(music && musicSelect){
+    musicSelect.value = savedTrack;
+    music.src = savedTrack;
+}
+
+async function changeMusic(file){
+    if(!music) return;
+
+    const wasPlaying = musicPlaying;
+
+    music.pause();
+    music.src = file;
+    music.load();
+
+    localStorage.setItem("labubuTrack", file);
+
+    if(wasPlaying){
+        try{
+            await music.play();
+            musicPlaying = true;
+            updateMusicButton();
+        }catch(error){
+            console.error("Music change error:", error);
+            musicPlaying = false;
+            updateMusicButton();
+        }
+    }
+
+    showToast("MUSIC CHANGED // " + file.toUpperCase());
+}
+
+function updateMusicButton(){
+    if(!musicButton) return;
+
+    musicButton.textContent = musicPlaying
+        ? "⏸ MUSIC ON"
+        : "▶ MUSIC OFF";
+}
+
+async function toggleMusic(){
+    if(!music || !musicButton) return;
+
+    try{
+        if(!musicPlaying){
+            await music.play();
+            musicPlaying = true;
+        }else{
+            music.pause();
+            musicPlaying = false;
+        }
+
+        updateMusicButton();
+    }catch(error){
+        console.error("Music error:", error);
+        musicPlaying = false;
+        musicButton.textContent = "❌ MUSIC ERROR";
+    }
+}
+
+const cursorGlow = document.getElementById("cursorGlow");
+
+document.addEventListener("mousemove", function(event){
+    if(!cursorGlow || cursorGlow.style.display === "none") return;
+
+    cursorGlow.style.left = event.clientX + "px";
+    cursorGlow.style.top = event.clientY + "px";
+});
+
+document.addEventListener("keydown", function(event){
+    if(event.key === "Escape"){
+        closeSettings();
+    }
+});
+
+const settingsOverlay = document.getElementById("settingsOverlay");
+if(settingsOverlay){
+    settingsOverlay.addEventListener("click", function(event){
+        if(event.target === this){
+            closeSettings();
+        }
+    });
+}
+
+
+/* =========================================================
+   LABUBU CLOUD ACCOUNT SYSTEM V1.4
+   Multi-device accounts through the Node backend.
+========================================================= */
+const API_URL = "https://labubu-discord-backend.onrender.com";
+let currentLabubuUser = null;
+let currentProfile = null;
+let authToken = localStorage.getItem("labubuCloudToken") || "";
+
+function normalizeUser(v){return String(v||"").trim().toLowerCase();}
+
+async function api(path, options={}){
+    const headers={"Content-Type":"application/json", ...(options.headers||{})};
+    if(authToken) headers.Authorization="Bearer "+authToken;
+    const response=await fetch(API_URL+path,{...options,headers});
+    let data={};
+    try{data=await response.json();}catch(e){}
+    if(!response.ok) throw new Error(data.error || "Erreur serveur");
+    return data;
+}
+
+function switchAuth(mode){
+    document.getElementById("loginTab").classList.toggle("active",mode==="login");
+    document.getElementById("registerTab").classList.toggle("active",mode==="register");
+    document.getElementById("loginPanel").classList.toggle("active",mode==="login");
+    document.getElementById("registerPanel").classList.toggle("active",mode==="register");
+    document.getElementById("authMessage").textContent="";
+}
+
+async function registerAccount(){
+    const raw=document.getElementById("registerUser").value.trim();
+    const pass=document.getElementById("registerPass").value;
+    const pass2=document.getElementById("registerPass2").value;
+    const msg=document.getElementById("authMessage");
+
+    if(raw.length<3){msg.textContent="Pseudo : minimum 3 caractères.";return;}
+    if(!/^[a-zA-Z0-9_.-]+$/.test(raw)){msg.textContent="Pseudo : lettres, chiffres, _, . ou - uniquement.";return;}
+    if(!/[a-zA-Z]/.test(raw)){msg.textContent="Le pseudo doit contenir au moins une lettre.";return;}
+    if(normalizeUser(raw)==="ttnowner"){msg.textContent="Ce pseudo est réservé à l'Owner.";return;}
+    if(pass.length<6){msg.textContent="Mot de passe : minimum 6 caractères.";return;}
+    if(pass!==pass2){msg.textContent="Les mots de passe ne correspondent pas.";return;}
+
+    try{
+        const data=await api("/api/register",{method:"POST",body:JSON.stringify({
+            username:raw,password:pass,settings:getDefaultProfileSettings()
+        })});
+        acceptCloudSession(data);
+    }catch(e){msg.textContent=e.message;}
+}
+
+async function loginAccount(){
+    const username=document.getElementById("loginUser").value.trim();
+    const password=document.getElementById("loginPass").value;
+    const msg=document.getElementById("authMessage");
+    try{
+        const data=await api("/api/login",{method:"POST",body:JSON.stringify({username,password})});
+        acceptCloudSession(data);
+    }catch(e){msg.textContent=e.message;}
+}
+
+function acceptCloudSession(data){
+    authToken=data.token;
+    localStorage.setItem("labubuCloudToken",authToken);
+    currentProfile=data.user;
+    currentLabubuUser=normalizeUser(data.user.username);
+    document.getElementById("accountGate").classList.add("hidden");
+    document.body.classList.toggle("ownerMode",!!data.user.isOwner);
+    loadProfileSettings();
+    if(data.user.isOwner) renderOwnerAccounts();
+}
+
+async function restoreSession(){
+    if(!authToken){
+        document.getElementById("accountGate").classList.remove("hidden");
+        return;
+    }
+    try{
+        const data=await api("/api/me");
+        acceptCloudSession({token:authToken,user:data.user});
+    }catch(e){
+        authToken="";
+        localStorage.removeItem("labubuCloudToken");
+        document.getElementById("accountGate").classList.remove("hidden");
+    }
+}
+
+function getDefaultProfileSettings(){
+    const defaults={};
+    document.querySelectorAll("[data-setting]").forEach(el=>defaults[el.dataset.setting]=el.checked);
+    return defaults;
+}
+
+async function changeProfileSetting(el){
+    if(!currentProfile)return;
+    currentProfile.settings=currentProfile.settings||{};
+    currentProfile.settings[el.dataset.setting]=el.checked;
+    applyProfileSettings(currentProfile.settings);
+    try{
+        await api("/api/settings",{method:"PUT",body:JSON.stringify({settings:currentProfile.settings})});
+        if(currentProfile.settings.settingToasts!==false) showToast("CLOUD SETTING SAVED");
+    }catch(e){showToast("SAVE ERROR");}
+}
+
+function loadProfileSettings(){
+    if(!currentProfile)return;
+    currentProfile.settings={...getDefaultProfileSettings(),...(currentProfile.settings||{})};
+    document.querySelectorAll("[data-setting]").forEach(el=>{
+        if(el.dataset.setting in currentProfile.settings) el.checked=!!currentProfile.settings[el.dataset.setting];
+    });
+    const name=document.getElementById("settingsAccountName");
+    if(name) name.textContent=(currentProfile.isOwner?"👑 ":"👤 ")+currentProfile.username;
+    applyProfileSettings(currentProfile.settings);
+}
+
+async function resetProfileSettings(){
+    if(!currentProfile)return;
+    if(currentProfile.settings?.resetWarning!==false && !confirm("Réinitialiser les 50 réglages ?"))return;
+    currentProfile.settings=getDefaultProfileSettings();
+    try{
+        await api("/api/settings",{method:"PUT",body:JSON.stringify({settings:currentProfile.settings})});
+        loadProfileSettings();
+        showToast("SETTINGS RESET");
+    }catch(e){showToast("RESET ERROR");}
+}
+
+function logoutAccount(){
+    if(currentProfile?.settings?.confirmLogout!==false && !confirm("Se déconnecter de Labubu Web ?"))return;
+    authToken="";
+    currentProfile=null;
+    currentLabubuUser=null;
+    localStorage.removeItem("labubuCloudToken");
+    document.body.classList.remove("ownerMode");
+    document.getElementById("accountGate").classList.remove("hidden");
+    switchAuth("login");
+}
+
+function ownerAllowed(){return !!currentProfile?.isOwner;}
+function escapeHtml(v){
+    return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+
+async function renderOwnerAccounts(){
+    if(!ownerAllowed())return;
+    const body=document.getElementById("ownerAccountsBody");
+    if(!body)return;
+    try{
+        const data=await api("/api/owner/accounts");
+        if(!data.accounts.length){
+            body.innerHTML='<tr><td colspan="5">Aucun compte utilisateur.</td></tr>';
+            return;
+        }
+        body.innerHTML=data.accounts.map((a,i)=>`<tr>
+            <td><strong>${escapeHtml(a.username)}</strong></td>
+            <td>${escapeHtml(new Date(a.createdAt).toLocaleString("fr-FR"))}</td>
+            <td><input class="ownerInput" id="ownerName${i}" maxlength="24" placeholder="Nouveau pseudo"></td>
+            <td><input class="ownerInput" id="ownerPass${i}" type="password" maxlength="64" placeholder="Nouveau mot de passe"></td>
+            <td>
+                <button class="ownerBtn" onclick="ownerRename('${a.id}',${i})">PSEUDO</button>
+                <button class="ownerBtn" onclick="ownerPassword('${a.id}',${i})">MDP</button>
+                <button class="ownerBtn ownerDanger" onclick="ownerDelete('${a.id}')">DELETE</button>
+            </td>
+        </tr>`).join("");
+    }catch(e){body.innerHTML='<tr><td colspan="5">Erreur serveur.</td></tr>';}
+}
+
+async function ownerRename(id,index){
+    const raw=(document.getElementById("ownerName"+index)?.value||"").trim();
+    if(raw.length<3 || !/^[a-zA-Z0-9_.-]+$/.test(raw) || !/[a-zA-Z]/.test(raw)){showToast("INVALID PSEUDO");return;}
+    try{
+        await api("/api/owner/accounts/"+encodeURIComponent(id)+"/username",{method:"PUT",body:JSON.stringify({username:raw})});
+        await renderOwnerAccounts(); showToast("PSEUDO UPDATED");
+    }catch(e){showToast(e.message);}
+}
+
+async function ownerPassword(id,index){
+    const password=document.getElementById("ownerPass"+index)?.value||"";
+    if(password.length<6){showToast("PASSWORD MIN 6");return;}
+    try{
+        await api("/api/owner/accounts/"+encodeURIComponent(id)+"/password",{method:"PUT",body:JSON.stringify({password})});
+        document.getElementById("ownerPass"+index).value="";
+        showToast("PASSWORD REPLACED");
+    }catch(e){showToast(e.message);}
+}
+
+async function ownerDelete(id){
+    if(!confirm("Supprimer ce compte ?"))return;
+    try{
+        await api("/api/owner/accounts/"+encodeURIComponent(id),{method:"DELETE"});
+        await renderOwnerAccounts(); showToast("ACCOUNT DELETED");
+    }catch(e){showToast(e.message);}
+}
+
+function applyProfileSettings(s){
+    const b=document.body;
+    b.classList.toggle("compactMode",!!s.compact);
+    b.classList.toggle("roundedOff",s.rounded===false);
+    b.classList.toggle("largeText",!!s.largeText);
+    b.classList.toggle("highContrast",!!s.contrast);
+    b.classList.toggle("hideFooter",s.footer===false);
+    b.classList.toggle("hideStats",s.stats===false);
+    b.classList.toggle("hideHero",s.hero===false);
+    b.classList.toggle("hideTerminal",s.terminals===false);
+    b.classList.toggle("wideShell",!!s.wide);
+    b.classList.toggle("centerText",!!s.centerText);
+    b.classList.toggle("dimCards",!!s.dimCards);
+    b.classList.toggle("cardBorders",!!s.cardBorders);
+    b.classList.toggle("glassOff",s.glass===false);
+    b.classList.toggle("noAnimations",s.animations===false || !!s.reducedMotion);
+    document.documentElement.style.scrollBehavior=s.smoothScroll===false?"auto":"smooth";
+    const clock=document.getElementById("clock"); if(clock)clock.style.display=s.clock===false?"none":"";
+    const topCenter=document.querySelector(".topCenter"); if(topCenter)topCenter.style.display=s.systemStatus===false?"none":"";
+    const player=document.querySelector(".musicPlayer"); if(player)player.style.display=s.musicPlayer===false?"none":"";
+    document.querySelectorAll(".sectionCode").forEach(x=>x.style.display=s.sectionCodes===false?"none":"");
+    document.querySelectorAll(".cardIcon").forEach(x=>x.style.display=s.cardIcons===false?"none":"");
+    document.querySelectorAll(".modNumber").forEach(x=>x.style.display=s.modNumbers===false?"none":"");
+    if(music){
+        music.loop=s.musicLoop!==false;
+        if(s.volume25) music.volume=.25;
+        else if(s.volume75) music.volume=.75;
+        else music.volume=.5;
+    }
+}
+
+
+
+/* =========================================================
+   GLOBAL CLOUD CHAT
+========================================================= */
+let chatTimer=null;
+let lastChatSignature="";
+
+function chatEscape(v){
+    return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+async function openGlobalChat(){
+    await loadChatMessages(true);
+    if(chatTimer) clearInterval(chatTimer);
+    chatTimer=setInterval(()=>loadChatMessages(false),4000);
+}
+async function loadChatMessages(forceScroll=false){
+    if(!authToken)return;
+    const box=document.getElementById("chatMessages");
+    const status=document.getElementById("chatStatus");
+    if(!box)return;
+    try{
+        const data=await api("/api/chat?limit=100");
+        const sig=data.messages.map(m=>m.id).join(",");
+        if(sig===lastChatSignature && !forceScroll)return;
+        lastChatSignature=sig;
+        box.innerHTML=data.messages.length ? data.messages.map(m=>{
+            const mine=currentProfile && String(m.userId)===String(currentProfile.id);
+            const owner=!!m.isOwner;
+            const date=new Date(m.createdAt).toLocaleString("fr-FR");
+            return `<div class="chatMessage ${mine?"mine":""} ${owner?"ownerMessage":""}">
+                <div class="chatMeta">
+                    <span class="${owner?"chatOwner":"chatUser"}">${owner?"👑 OWNER 👑 ":""}${chatEscape(m.username)}</span>
+                    <span>${chatEscape(date)}</span>
+                </div>
+                <div class="chatText">${chatEscape(m.text)}</div>
+            </div>`;
+        }).join("") : '<div class="chatStatus">Aucun message. Lance la discussion 👋</div>';
+        if(forceScroll || mineNearBottom(box)) box.scrollTop=box.scrollHeight;
+        if(status)status.textContent="● CLOUD CHAT ONLINE // "+data.messages.length+" MESSAGES";
+    }catch(e){
+        if(status)status.textContent="● CHAT ERROR // "+e.message;
+    }
+}
+function mineNearBottom(box){return box.scrollHeight-box.scrollTop-box.clientHeight<100}
+async function sendChatMessage(){
+    const input=document.getElementById("chatInput");
+    if(!input)return;
+    const text=input.value.trim();
+    if(!text)return;
+    input.disabled=true;
+    try{
+        await api("/api/chat",{method:"POST",body:JSON.stringify({text})});
+        input.value="";
+        await loadChatMessages(true);
+    }catch(e){showToast(e.message);}
+    finally{input.disabled=false;input.focus();}
+}
+const chatForm=document.getElementById("chatForm");
+if(chatForm){
+    chatForm.addEventListener("submit",function(e){
+        e.preventDefault();
+        sendChatMessage();
+    });
+}
+
+
+document.addEventListener("DOMContentLoaded", function(){
+    loadSettings();
+    updateVisitorCount();
+    restoreSession();
+});
+</script>
+
+</body>
+</html>
